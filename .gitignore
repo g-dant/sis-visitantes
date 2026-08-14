@@ -1,0 +1,6 @@
+*.swp
+run.sh
+install_pkg.sh
+.env
+__pycache__/
+*.py[cod]

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title> Gerenciar Usuários</title>
+
+  <link rel="stylesheet" href="/static/ext/font-awesome-6.7.2/css/all.css">
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
+
+  <script src="/static/js/utils.js" defer></script>
+  <script src="/static/js/config.js" defer></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/usuarios.js" defer></script>
+  <script src="/static/js/paginar-usuarios.js" defer></script>
+  <script src="/static/js/buscas-usuarios.js" defer></script>
+
+  <script src="/static/js/components/header/editar-usuario.js" defer></script> 
+  <script src="/static/js/components/header/header.js" defer></script>
+  <script src="/static/js/components/header/logout.js" defer></script>
+
+</head>
+
+{% set mostrar_link_main = true %}
+{% set mostrar_link_usuarios = false %}
+
+<body>
+
+  {% include "components/header_sistema/header_sistema.html" %}
+  {% include "components/header_editar_usuario_logado/header_editar_usuario_logado.html" %}
+
+  <div class="container">
+    <div class="header">
+      <h2>Gerenciamento de Usuários</h2>
+    </div>
+
+    {% include "usuarios/barra_usuarios.html" %}
+    {% include "usuarios/tabela_usuarios.html" %}
+    {% include "usuarios/paginacao_usuarios.html" %}
+    {% include "usuarios/modal_usuario.html" %}
+
+    {% include "components/header_editar_usuario_logado/modal_editar_usuario_logado.html" %}
+
+  </div>
+
+</body>
+</html>

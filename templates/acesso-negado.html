@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>Acesso negado</title>
+
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
+
+  <script src="/static/js/config.js"></script>
+  <script src="/static/js/components/header/logout.js"></script>
+  <script src-"/static/js/components/acesso-negado.js"></script>
+
+</head>
+{% include "components/header_sistema/header_sistema.html" %}
+<body>
+  <main class="container">
+    <section class="card">
+
+      <h1>
+        <i class="fa-solid fa-ban"></i>
+        Acesso negado
+      </h1>
+
+      <br><p>Você não possui permissão para acessar esta funcionalidade.</p><br>
+      <p>Caso necessite deste acesso, entre em contato com o administrador do sistema.</p><br>
+
+      <p>
+        <a href="#" id="btn-retornar-login">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Ir para a página de login
+        </a>
+      </p>
+
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<div class="desktop-table table-wrap">
+
+  <table>
+
+    <thead>
+      <tr>
+        <th class="sortable" onclick="ordenarPor('visitante_nome')">
+          <div class="th-content">
+            <span>Nome</span>
+            <i class="fa-solid fa-sort"></i>
+          </div>
+        </th>
+        <th class="sortable" onclick="ordenarPor('primeiro_dia')">
+          <div class="th-content">
+            <span>De</span>
+            <i class="fa-solid fa-sort"></i>
+          </div>
+        </th>
+   
+        <th class="sortable" onclick="ordenarPor('ultimo_dia')">
+          <div class="th-content">
+            <span>Até</span>
+            <i class="fa-solid fa-sort"></i>
+          </div>
+        </th>
+   
+        <th class="sortable" onclick="ordenarPor('status_exibicao')">
+          <div class="th-content">
+            <span>Status</span>
+            <i class="fa-solid fa-sort"></i>
+          </div>
+        </th>
+   
+        <th class="sortable" onclick="ordenarPor('solicitante_nome')">
+          <div class="th-content">
+            <span>Solicitante</span>
+            <i class="fa-solid fa-sort"></i>
+          </div>
+        </th>
+        <th>
+          <div class="th-content">
+           Ações
+          </div>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody id="autorizacoes-tbody"></tbody>
+  </table>
+
+</div>
+
+<div class="mobile-cards" id="autorizacoes-cards">
+</div>
+
+<div class="pagination-container">
+  <div class="page-size">
+    <label for="qtd-registros">Exibir:</label>
+    <select id="qtd-registros">
+      <option value="5">5</option>
+      <option value="10" selected>10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="-1">Todos</option>
+    </select>
+  </div>
+  <div class="pagination">
+    <div id="pagination" class="pagination"></div>
+  </div>
+</div>

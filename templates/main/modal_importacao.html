@@ -1,0 +1,46 @@
+<div id="modalImportacao" class="modal-bg">
+  <div class="modal modal-importacao">
+
+    <h2>Importar Autorizações</h2>
+    <div class="importacao-conteudo">
+
+      <div class="importacao-conteudo">
+        <input type="file" id="arquivo-importacao" accept=".csv,.xlsx,.ods" style="display:none;">
+
+        <div class="importacao-arquivo">
+
+        <button class="btn btn-primary" onclick="selecionarArquivoImportacao()">
+          <i class="fa-solid fa-folder-open"></i>
+          Escolher Arquivo
+        </button>
+
+        <div id="nome-arquivo-importacao" class="arquivo-importacao">
+          Nenhum arquivo selecionado
+        </div>
+      </div>
+
+      <div class="importacao-info">
+        Formatos aceitos:
+        <strong>CSV</strong>,
+        <strong>XLSX</strong> e
+        <strong>ODS</strong>
+      </div>
+
+      <div class="importacao-modelo">
+        <button class="btn" onclick="baixarModeloImportacao()">
+          <i class="fa-solid fa-download"></i>
+          Baixar Modelo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn" onclick="fecharModalImportacao()">Cancelar</button>
+    <button id="btn-importar-autorizacoes" class="btn btn-primary" 
+      onclick="importarArquivoAutorizacoes()" disabled>
+      Importar
+    </button>
+  </div>
+</div>
+</div>

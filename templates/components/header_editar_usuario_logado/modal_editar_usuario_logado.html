@@ -1,0 +1,62 @@
+<div id="modal-editar-usuario" class="modal-overlay oculto">
+
+  <div class="modal-usuario">
+
+    <button class="modal-fechar" onclick="fecharModalEditarUsuario()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2>Editar usuário</h2>
+    <h3 id="editar-usuario-nome">Nome do usuário</h3>
+    <h4 id="editar-usuario-info">Credencial: XXX; Setor: XXX</h4>
+
+    <div class="campo-edicao">
+      <label>E-mail</label>
+
+      <div class="campo-com-botao">
+
+        <input id="editar-usuario-email" type="email" disabled>
+
+        <button class="btn-edicao" onclick="habilitarEdicaoEmail()">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+
+      </div>
+
+      <span id="erro-email" class="erro-campo"></span>
+    </div>
+
+    <div class="campo-edicao">
+      <label>Nova senha</label>
+
+      <div class="campo-com-botao">
+
+        <input id="editar-usuario-senha" type="password" disabled>
+
+        <button class="btn-edicao" onclick="habilitarEdicaoSenha()">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+
+      </div>
+
+      <span id="erro-senha" class="erro-campo"></span>
+
+    </div>
+
+    <div id="container-confirmar-senha" class="campo-edicao oculto">
+
+      <label>Confirmar senha</label>
+      <input id="editar-usuario-confirmar-senha" type="password">
+      <span id="erro-confirmar-senha" class="erro-campo"></span>
+
+    </div>
+
+    <br/>
+    <div class="acoes-modal">
+      <button id="btn-atualizar-usuario" class="btn" onclick="atualizarUsuarioLogado()" disabled>
+        Atualizar usuário
+      </button>
+    </div>
+
+  </div>
+</div>

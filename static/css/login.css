@@ -1,0 +1,196 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f6f9;
+    padding: 20px;
+}
+
+.mensagem-erro {
+  display: none;
+  min-height: 20px;
+
+  margin-bottom: 12px;
+  padding: 10px;
+
+  color: #b71c1c;
+  background-color: #ffebee;
+
+  border: 1px solid #ef9a9a;
+  border-radius: 4px;
+
+  font-size: 14px;
+  text-align: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    display: flex;
+}
+
+.image-side {
+    flex: 1;
+    min-height: 500px;
+    background: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.image-side img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.form-side {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.system-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #1976d2;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: #1976d2;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: #1976d2;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-button:hover {
+    background: #125ca3;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    .login-container {
+        max-width: 700px;
+    }
+
+    .form-side {
+        padding: 35px;
+    }
+}
+
+/* Smartphone */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .image-side {
+        min-height: 220px;
+    }
+
+    .form-side {
+        padding: 30px 25px;
+    }
+
+    .system-title {
+        font-size: 1.7rem;
+        margin-bottom: 30px;
+    }
+}
+
+/* Smartphones pequenos */
+@media (max-width: 480px) {
+    .form-side {
+        padding: 25px 20px;
+    }
+
+    .system-title {
+        font-size: 1.5rem;
+    }
+
+    .form-group input {
+        padding: 12px;
+    }
+}
+
+.campo-invalido {
+  border-color: #d32f2f !important;
+}
+
+.campo-invalido:focus {
+  border-color: #d32f2f !important;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.15);
+}
+
+.campo-valido {
+  border-color: #2e7d32 !important;
+}
+
+.campo-valido:focus {
+  border-color: #2e7d32 !important;
+  box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.15);
+}

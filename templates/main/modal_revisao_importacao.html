@@ -1,0 +1,91 @@
+<div id="modalRevisaoImportacao" class="modal-bg">
+
+  <div class="modal modal-revisao-importacao">
+
+    <h2>Revisão da Importação</h2>
+
+    <div
+      id="erro-global-importacao"
+      class="erro-global-importacao">
+    </div>
+
+    <div class="revisao-resumo">
+
+      <span id="revisao-total-linhas"></span>
+
+      <span id="revisao-total-erros"></span>
+
+    </div>
+
+    <div
+      id="revisao-importacao-conteudo"
+      class="revisao-importacao-conteudo">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th style="display: none">
+              Linha
+            </th>
+
+            <th>CPF</th>
+
+            <th>Nome</th>
+
+            <th>Empresa</th>
+
+            <th>Placa</th>
+
+            <th>De</th>
+
+            <th>Até</th>
+
+            <th>Resultado</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="tbody-importacao">
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button class="btn" onclick="fecharModalRevisaoImportacao()">
+        Fechar
+      </button>
+
+      <button id="btn-confirmar-importacao" class="btn btn-primary" disabled>
+        Importar
+      </button>
+
+    </div>
+
+    <div id="tooltip-aviso-importacao">
+    
+      <div class="placeholder-tooltip">
+        Nome informado na planilha:
+        <strong>XXXXXXXXXXXXXXX</strong>
+    
+        <br><br>
+    
+        Nome já cadastrado:
+        <strong>XXXXXXXXXXXXXXX</strong>
+    
+        <br><br>
+    
+        A importação utilizará o nome cadastrado.
+      </div>
+    
+    </div>
+
+  </div>
+
+</div>

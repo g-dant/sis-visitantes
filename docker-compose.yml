@@ -1,0 +1,24 @@
+services:
+  sisvisitantes:
+    image: sisvisitantes
+    container_name: App-Sisvisitantes-Bnic
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTPS_PROXY}
+        NO_PROXY: ${NO_PROXY}
+
+    ports:
+      - "4008:8000"
+
+    environment:
+      DB_HOST_SISVISITANTES: ${DB_HOST_SISVISITANTES}
+      DB_PORT_SISVISITANTES: ${DB_PORT_SISVISITANTES}
+      DB_NAME_SISVISITANTES: ${DB_NAME_SISVISITANTES}
+      DB_USER_SISVISITANTES: ${DB_USER_SISVISITANTES}
+      DB_PASSWORD_SISVISITANTES: ${DB_PASSWORD_SISVISITANTES}
+
+    restart: unless-stopped

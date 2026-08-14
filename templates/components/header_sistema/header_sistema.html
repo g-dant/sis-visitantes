@@ -1,0 +1,31 @@
+<div class="header">
+
+  <div class="system-brand">
+    <img src="/static/img/logo.png" alt="Logo do Sistema" class="system-logo">
+
+    <div class="system-info">
+            <h1 id="system-title" class="system-title">{{ nome_sistema }}</h1>
+	    {% if request.url.path == '/pages/main' %}
+	    <h2>Gerenciar autorizações de entrada</h2>
+	    {% endif %}
+	    {% if request.url.path == '/pages/usuarios' %}
+	    <h2>Gerenciar acessos de usuários ao sistema</h2>
+	    {% endif %}
+            <div class="system-subtitle">{{ descricao_sistema }}</div>
+    </div>
+  </div>
+
+  {% for item in menu %}
+    {% if exibir_item_menu(request, usuario, item) %}
+      <a class="header-button" href="{{ item.url }}">
+        <i class="{{ item.icone }}"></i>
+        Ir para "{{ item.titulo }}"
+      </a>
+    {% endif %}
+  {% endfor %}
+
+  <button id="btn-escanear-qrcode" class="btn btn-primary" onclick="abrirLeitorQrCode()">
+    <i class="fa-solid fa-qrcode"></i>
+  </button>
+
+</div>

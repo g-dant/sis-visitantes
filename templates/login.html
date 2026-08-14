@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{ nome_sistema }}</title>
+
+  <link rel="stylesheet" href="/static/css/login.css">
+  <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
+
+  <script src="/static/js/config.js" defer></script>
+  <script src="/static/js/login.js" defer></script>
+</head>
+
+<body>
+<div class="login-container">
+
+  <div class="image-side">
+    <img src="/static/img/logo.png" alt="Logo do Sistema">
+  </div>
+
+  <div class="form-side">
+    <div class="system-title">{{ nome_sistema }}</div>
+  
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" autocomplete="username" placeholder="Digite seu email"
+	  oninput="this.value = this.value.toLowerCase()"> <!-- E-mail digitado sempre deverá ser minúsculo -->
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" autocomplete="current-password" placeholder="Digite sua senha">
+      </div>
+      <div id="mensagem-erro" class="mensagem-erro"></div>
+      <button id="login-button" type="submit" class="login-button">Entrar</button>
+      <div class="forgot-password">
+        <a href="#">Esqueci a senha</a>
+      </div>
+    </form>
+
+  </div>
+</div>
+</body>
+
+</html>

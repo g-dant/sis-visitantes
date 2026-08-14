@@ -1,0 +1,27 @@
+# API REST
+fastapi==0.116.1
+
+# Servidor HTTP
+uvicorn[standard]==0.35.0
+
+# PostgreSQL Driver
+psycopg2-binary==2.9.10
+
+# Gerador de HASH de senhas
+passlib[bcrypt]==1.7.4
+bcrypt==4.3.0
+
+# Uploads futuros
+python-multipart==0.0.20
+
+# Renderização de páginas HTML
+jinja2==3.1.6
+
+# JWT para QR CODE
+PyJWT==2.13.0
+
+# Leitura de planilha .xls/.xlsx
+openpyxl==3.1.5
+
+# Leitura de planilha .ods
+odfpy==1.4.1

@@ -1,0 +1,101 @@
+<div id="modalUsuario" class="modal-bg">
+
+  <div class="modal">
+
+    <h2 id="modal-usuario-titulo">Novo usuário</h2>
+    <br/>
+    <div class="form-grid">
+
+      <div class="full">
+        <label>Nome</label>
+        <input type="text" id="usuario-nome" required>
+      </div>
+
+      <div>
+        <label>E-mail</label>
+        <input type="email" id="usuario-email" required>
+      </div>
+
+      <div>
+        <label>Telefone</label>
+        <input type="text" id="usuario-telefone">
+      </div>
+
+      <div>
+        <label>Tipo</label>
+        <select id="usuario-tipo" required></select>
+      </div>
+
+      <div>
+        <label>Setor</label>
+        <select id="usuario-setor" required></select>
+      </div>
+
+      <div>
+        <label>Credencial</label>
+        <select id="usuario-credencial" required></select>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <div class="autenticacao-header">
+      <h3>Autenticação</h3>
+    
+      <label id="container-alterar-senha" class="alterar-senha">
+        <input type="checkbox" id="usuario-alterar-senha">
+        Alterar senha
+      </label>
+    </div>
+    
+    <div class="form-grid">
+
+      <div class="full">
+        <label>Senha</label>
+        <input type="password" id="usuario-senha">
+      </div>
+    
+      <div class="full">
+        <label>Confirmar senha</label>
+        <input type="password" id="usuario-confirmacao-senha">
+      </div>
+
+    </div>
+    <hr/>
+    <div class="usuario-ativo">
+      <label>
+        <input type="checkbox" id="usuario-ativo">
+        Ativo
+      </label>
+    </div>
+
+    <div class="modal-footer-info">
+
+      <div>
+        <strong>Criado em:</strong>
+        <span id="usuario-data-criacao">
+          —
+        </span>
+      </div>
+
+      <div>
+        <strong>Última alteração:</strong>
+        <span id="usuario-data-alteracao">
+          —
+        </span>
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="fecharModalUsuario()">
+        Cancelar
+      </button>
+
+      <button id="btn-salvar-usuario" class="btn btn-primary">
+        Salvar
+      </button>
+    </div>
+  </div>
+</div>

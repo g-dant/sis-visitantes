@@ -1,0 +1,28 @@
+<div class="toolbar-usuarios">
+  <div class="toolbar-usuarios-grupo">
+  
+    <div class="toolbar-usuarios-filtros">
+  
+      <input type="text" id="filtro-usuarios" placeholder="Buscar usuário...">
+  
+      <select id="filtro-ativo">
+        <option value="">Todos</option>
+        <option value="true">Ativos</option>
+        <option value="false">Inativos</option>
+      </select>
+  
+    </div>
+  
+    {% if possui_permissao(usuario, "USUARIO_CRIAR") %}
+    <button
+      id="btn-novo-usuario"
+      class="btn btn-primary" onclick="abrirNovoUsuario()">
+  
+      <i class="fa-solid fa-user-plus"></i>
+      Novo usuário
+  
+    </button>
+    {% endif %}
+  
+  </div>
+</div>

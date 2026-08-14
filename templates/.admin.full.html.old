@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Painel Administrativo</title>
+
+  <link rel="stylesheet" href="assets/ext/font-awesome-6.7.2/css/all.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+
+  <script src="assets/js/admin-modais.js"></script>
+</head>
+
+<body>
+
+  <div class="system-brand">
+    <img src="assets/img/logo.png" alt="Logo do Sistema" class="system-logo">
+
+    <div class="system-info">
+      <h1 class="system-title">NOME DO SISTEMA</h1>
+      <div class="system-subtitle">Controle de Autorizações</div>
+    </div>
+  </div>
+
+  <hr class="header-divider">
+
+  <div class="header">
+    <h2>Usuário: João da Silva</h2>
+    <div>Credencial: Admin</div>
+    <div>Setor: 
+      <span class="tooltip">
+        SEG-CP
+        <span>
+          <b>Segurança</b>
+          <br>
+          Controle de Pessoal
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats">
+
+      <div class="stat">
+        <h2>532</h2>
+        <div>Ativas</div>
+      </div>
+
+      <div class="stat">
+        <h2>12</h2>
+        <div>Pendentes</div>
+      </div>
+
+      <div class="stat">
+        <h2>41</h2>
+        <div>Revogadas</div>
+      </div>
+
+      <div class="stat">
+        <h2>19</h2>
+        <div>Expiradas</div>
+      </div>
+
+    </div>
+
+    <div class="toolbar">
+      <input type="text" placeholder="Buscar nome, CPF ou empresa">
+
+      <select>
+        <option>
+          Todos Status
+        </option>
+      </select>
+
+      <select>
+        <option>
+          Todos Setores
+        </option>
+      </select>
+
+      <input type="date">
+      <button class="btn btn-primary" onclick="openModalVisitantes()">
+        <i class="fa-solid fa-plus"></i>
+        Nova Autorização
+      </button>
+
+      <button class="btn btn-primary" onclick="openUsersModal()">
+        <i class="fa-solid fa-users"></i>
+        Gerenciar Usuários
+      </button>
+    </div>
+
+    <div class="desktop-table table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>De</th>
+            <th>Até</th>
+            <th>Status</th>
+            <th>Solicitante</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Maria Oliveira</td>
+            <td>01/06/2026</td>
+            <td>30/06/2026</td>
+            <td>
+              <span class="badge active">
+                ATIVA
+              </span>
+            </td>
+            <td>
+              <span class="tooltip">
+                SEG-CP
+                <span>
+                  <b>Segurança</b>
+                  <br>
+                  Controle de Pessoal
+                </span>
+              </span>
+            </td>
+            <td>
+              <div class="actions">
+
+                <button class="icon view">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+
+                <button class="icon edit">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+
+                <button class="icon undo">
+                  <i class="fa-solid fa-rotate-left"></i>
+                </button>
+
+                <button class="icon delete">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mobile-cards">
+      <div class="mobile-card">
+        <button class="btn menu-btn">
+          ⋮
+        </button>
+        <h3>Maria Oliveira</h3>
+
+        <p><span class="badge active">ATIVA</span></p>
+        <p>De: 01/06/2026</p>
+        <p>Até: 30/06/2026</p>
+        <p>Solicitante: SEG-CP</p>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button>«</button>
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>»</button>
+    </div>
+
+  </div>
+  <div id="modalVisitantes" class="modal-bg">
+    <div class="modal">
+
+      <h2>Autorização</h2>
+
+      <div class="tabs">
+        <div class="tab">Pessoa</div>
+        <div class="tab">Veículo</div>
+        <div class="tab">Autorização</div>
+      </div>
+
+      <div class="form-grid">
+
+        <input type="text" placeholder="Nome">
+        <input type="email" placeholder="Email">
+        <input type="text" placeholder="Celular">
+        <input type="text" placeholder="RG">
+        <input type="text" placeholder="CPF">
+        <input type="text" placeholder="Empresa">
+        <input type="text" placeholder="Placa do Veículo">
+        <input type="text" placeholder="Tipo de Veículo">
+        <input type="date">
+        <input type="date">
+
+        <select>
+          <option>Ativa</option>
+          <option>Pendente</option>
+          <option>Revogada</option>
+          <option>Expirada</option>
+        </select>
+
+        <input type="text" value="SEG-CP" readonly>
+        <textarea class="full" rows="4"placeholder="Observações"></textarea>
+
+      </div>
+
+      <div class="audit">
+
+        <h3>Histórico de Alterações</h3>
+        <br>
+        <p>
+          Criada por João da Silva
+          em 10/01/2026 às 09:12
+        </p>
+        <p>
+          Editada por Maria Oliveira
+          em 11/01/2026 às 10:47
+        </p>
+        <p>
+          Status alterado para ATIVA
+          em 12/01/2026 às 08:30
+        </p>
+
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+      
+        <button class="btn" onclick="closeModalVisitantes()">Fechar</button>
+        <button class="btn btn-primary">Salvar</button>
+      
+      </div>
+    </div>
+  </div>
+
+  <div id="usersModal" class="modal-bg">
+    <div class="modal users-modal">
+
+      <h2>Gerenciamento de Usuários</h2>
+
+      <div class="users-toolbar">
+        <button class="btn btn-primary" onclick="novoUsuario()">
+          <i class="fa-solid fa-user-plus"></i>
+          Novo Usuário
+        </button>
+
+        <input type="text" placeholder="Buscar usuário...">
+      </div>
+
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>E-mail</th>
+            <th>Local</th>
+            <th>Setor</th>
+            <th>Credencial</th>
+            <th>Ações</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>João da Silva</td>
+            <td>Admin</td>
+            <td>joao@empresa.com</td>
+            <td>1234</td>
+            <td>CP</td>
+            <td>Admin</td>
+            <td>
+              <div class="actions">
+                <button class="icon edit">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="icon delete">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Maria Oliveira</td>
+            <td>Operador</td>
+            <td>maria@empresa.com</td>
+            <td>5678</td>
+            <td>TI</td>
+            <td>Usuário</td>
+            <td>
+              <div class="actions">
+                <button class="icon edit">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+              
+                <button class="icon delete">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="user-mobile-card">
+
+        <h3>João da Silva</h3>
+        <p>Tipo: Admin</p>
+        <p>Local: 1234</p>
+        <p>Setor: CP</p>
+        <p>Credencial: Admin</p>
+
+        <div class="actions">
+          <button class="icon edit">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+
+          <button class="icon delete">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="user-form">
+
+        <h3>Cadastro / Edição de Usuário</h3>
+        <input type="hidden" id="userId">
+
+        <div class="form-grid">
+
+          <div>
+            <label>Nome</label>
+            <input type="text" id="userName">
+          </div>
+
+          <div>
+            <label>Tipo</label>
+            <select id="userType">
+              <option>Admin</option>
+              <option>Operador</option>
+              <option>Consulta</option>
+            </select>
+          </div>
+
+          <div>
+            <label>E-mail</label>
+            <input type="email" id="userEmail">
+          </div>
+
+          <div>
+            <label>Telefone</label>
+            <input type="text" id="userPhone">
+          </div>
+
+          <div class="full">
+            <label>Local</label>
+            <select id="idLocal">
+              <option value="">Selecione...</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label>Setor</label>
+            <select id="idSetor">
+              <option value="">
+                Selecione...
+              </option>
+            </select> 
+          </div>
+
+          <div>
+            <label>Credencial</label>
+
+            <select>
+              <option>Admin</option>
+              <option>Gestor</option>
+              <option>Usuário</option>
+            </select>
+
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+          <button class="btn" onclick="closeModalUsuarios()">Cancelar</button>
+          <button class="btn btn-primary">Salvar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<div class="stats">
+
+  <div class="stat">
+    <h2 id="painel-autorizadas">0</h2>
+    <div>Ativas</div>
+  </div>
+
+  <div class="stat">
+    <h2 id="painel-pendentes">0</h2>
+    <div>Pendentes</div>
+  </div>
+
+  <div class="stat">
+    <h2 id="painel-revogadas">0</h2>
+    <div>Revogadas</div>
+  </div>
+
+  <div class="stat">
+    <h2 id="painel-expiradas">0</h2>
+    <div>Expiradas</div>
+  </div>
+
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-filtros">
+    <input id="input-busca-texto" type="text" placeholder="Nome / CPF / Empresa">
+    
+    <select id="select-status">
+      <option>Todos Status</option>
+    </select>
+
+    <select id="select-setor">
+      <option>Todos Setores</option>
+    </select>
+
+    <input type="date" id="input-data">
+  </div>
+
+  <div class="toolbar-acoes">
+    {% if possui_permissao(usuario, "AUTORIZACAO_IMPORTAR") %}
+    <button class="btn btn-primary" onclick="abrirModalImportacao()">
+      <i class="fa-solid fa-file-import"></i>
+      Importar Autorizações
+    </button>
+    {% endif %}
+    {% if possui_permissao(usuario, "AUTORIZACAO_CRIAR") %}
+    <button class="btn btn-primary" onclick="criarAutorizacao()">
+      <i class="fa-solid fa-plus"></i>
+      Nova Autorização
+    </button>
+    {% endif %}
+  </div>
+</div>
