@@ -82,11 +82,22 @@ body {
 }
 
 .stat {
-  background: #fff;
   padding: 18px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
   text-align: center;
+}
+
+.stat-green {
+  background: #b4edb4;
+}
+
+.stat-yellow {
+  background: #ede6a4;
+}
+
+.stat-red {
+  background: #f5aaa6;
 }
 
 .toolbar {

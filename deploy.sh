@@ -6,3 +6,5 @@ docker build \
   --build-arg HTTPS_PROXY="$HTTPS_PROXY" \
   --build-arg NO_PROXY="$NO_PROXY" \
   -t sisvisitantes .
+
+docker compose up -d --force-recreate
