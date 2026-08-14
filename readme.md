@@ -6,6 +6,10 @@ O sistema permite cadastrar e administrar visitantes, empresas, veículos, usuá
 
 Também possui um mecanismo de importação em lote de autorizações por planilha, com normalização, validação, pré-visualização, identificação de inconsistências e verificação de colisão de períodos.
 
+## OBSERVAÇÃO
+
+Este documento possui natureza técnica. Para consultar o manual de utilização do usuário, acesse [[http://apps.bnic.mb:3002/vieira.dantas/sis-visitantes/src/branch/main/manual-usuario.md]]
+
 ---
 
 # 1. Visão geral
@@ -2153,4 +2157,6 @@ A importação em lote possui mecanismos próprios de:
 As regras de colisão são baseadas exclusivamente na identidade do visitante, no período e na propriedade `participa_colisao` do status.
 
 Os estados `Pendente` e `Expirada` são derivados de `Autorizada` conforme as datas da autorização e a data atual, enquanto outros estados correspondem diretamente ao status armazenado.
+
+#### Sistema desenvolvido por: CT(EN) Guilherme VIEIRA DANTAS, BNIC
 
