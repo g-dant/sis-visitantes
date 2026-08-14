@@ -12,8 +12,7 @@ from utils.cpf_utils import CpfUtils
 class ValidacaoImportacaoService:
 
   @staticmethod
-  def validar(autorizacoes: list[AutorizacaoImportacao]
-    ) -> ResultadoImportacao:
+  def validar(autorizacoes: list[AutorizacaoImportacao]) -> ResultadoImportacao:
   
     linhas = []
     erros_globais = []
@@ -211,13 +210,8 @@ class ValidacaoImportacaoService:
     if visitante is None:
       return
   
-    nome_planilha = (linha.autorizacao.nome
-      .strip()
-      .upper())
-  
-    nome_banco = (visitante["nome"]
-      .strip()
-      .upper())
+    nome_planilha = (linha.autorizacao.nome.strip().upper())
+    nome_banco = (visitante["nome"].strip().upper())
   
     if nome_planilha == nome_banco:
       return
