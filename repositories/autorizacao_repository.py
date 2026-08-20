@@ -16,6 +16,7 @@ class AutorizacaoRepository:
             id,
             id_visitante,
             visitante_nome,
+            cpf,
             id_status_autorizacao_anterior,
             id_status_autorizacao,
             status_nome,
@@ -30,7 +31,8 @@ class AutorizacaoRepository:
             placa,
             marca,
             tipo,
-            cor
+            cor,
+            empresa_nome
           FROM autorizacao_consulta
           ORDER BY
             id DESC""")

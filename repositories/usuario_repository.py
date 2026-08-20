@@ -333,6 +333,7 @@ class UsuarioRepository:
     try:
 
       with conn.cursor() as cur:
+
         if email is not None:
           cur.execute("""
             UPDATE usuario

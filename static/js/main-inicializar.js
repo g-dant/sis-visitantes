@@ -114,20 +114,31 @@ async function renderizarAutorizacoes() {
 
     tbody.innerHTML += `
       <tr>
-        <td>${autorizacao.visitante_nome.toUpperCase()}</td>
-        <td style="text-align: center;">${formatarData(autorizacao.primeiro_dia)}</td>
-        <td style="text-align: center;">${formatarData(autorizacao.ultimo_dia)}</td>
+
         <td style="text-align: center;">
           <span class="badge ${cores_status[autorizacao.status_exibicao]}">
             ${autorizacao.status_exibicao}
           </span>
         </td>
 
-        <td>
-          ${autorizacao.setor_solicitante_codigo}
-          -
-          ${autorizacao.solicitante_nome}
+        <td>${autorizacao.visitante_nome.toUpperCase()}</td>
+
+	<td style="text-align: center;">${formatarCpf(autorizacao.cpf)}</td>
+
+        <td style="text-align: center;">${formatarData(autorizacao.primeiro_dia)}</td>
+
+        <td style="text-align: center;">${formatarData(autorizacao.ultimo_dia)}</td>
+
+        <td style="text-align: center;">
+	  <span title='${'Solicitação de ' + autorizacao.solicitante_nome}'
+	    style="color: #007bff; text-decoration: underline; cursor: help;">
+            ${autorizacao.setor_solicitante_codigo}
+	  </span>
         </td>
+
+	<td style="text-align: center;">
+	  ${autorizacao.empresa_nome}
+	</td>
 
         <td>
           <div class="actions">

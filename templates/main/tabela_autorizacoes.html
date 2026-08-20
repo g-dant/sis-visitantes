@@ -4,12 +4,28 @@
 
     <thead>
       <tr>
+
+        <th class="sortable" onclick="ordenarPor('status_nome')">
+	  <div class="th-content">
+	    <span>Status</span>
+	    <i class="fa-solid fa-sort"></i> 
+	  </div>
+	</th>
+   
         <th class="sortable" onclick="ordenarPor('visitante_nome')">
           <div class="th-content">
             <span>Nome</span>
             <i class="fa-solid fa-sort"></i>
           </div>
         </th>
+
+        <th class="sortable" onclick="ordenarPor('cpf')">
+          <div class="th-content">
+            <span>CPF</span>
+            <i class="fa-solid fa-sort"></i>
+          </div>
+        </th>
+
         <th class="sortable" onclick="ordenarPor('primeiro_dia')">
           <div class="th-content">
             <span>De</span>
@@ -23,25 +39,27 @@
             <i class="fa-solid fa-sort"></i>
           </div>
         </th>
-   
-        <th class="sortable" onclick="ordenarPor('status_exibicao')">
-          <div class="th-content">
-            <span>Status</span>
-            <i class="fa-solid fa-sort"></i>
-          </div>
-        </th>
-   
+
         <th class="sortable" onclick="ordenarPor('solicitante_nome')">
           <div class="th-content">
             <span>Solicitante</span>
             <i class="fa-solid fa-sort"></i>
           </div>
         </th>
+
+	<th class="sortable" onclick="ordenarPor('empresa_nome')">
+	  <div class="th-content">
+	    <span>Empresa</span>
+	    <i class="fa-solid fa-sort"></i>
+	  </div>
+	</th>
+
         <th>
           <div class="th-content">
            Ações
           </div>
         </th>
+
       </tr>
     </thead>
 

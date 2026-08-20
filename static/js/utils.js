@@ -4,22 +4,9 @@ function formatarData(dataIso) {
     return "";
   }
 
-  const data = new Date(dataIso);
+  const [ano, mes, dia] = dataIso.substring(0, 10).split("-");
 
-  if (Number.isNaN(data.getTime())) {
-    const [ano, mes, dia] = dataIso.split("-");
-    return `${dia}/${mes}/${ano}`;
-  }
-
-  return data.toLocaleString(
-    "pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    }
-  );
+  return `${dia}/${mes}/${ano}`;
 }
 
 function desformatarData(dataBr) {
@@ -110,5 +97,17 @@ function limparValidacaoCampo(campo, campoErro = null) {
   if (campoErro) {
     campoErro.textContent = "";
   }
+}
+
+function formatarCpf(cpfSoNumeros) {
+
+  if (cpfSoNumeros.length !== 11) {
+    return 'CPF inválido';
+  }
+
+  return (cpfSoNumeros.substring(0, 3) + '.' +
+	  cpfSoNumeros.substring(3, 6) + '.' +
+	  cpfSoNumeros.substring(6, 9) + '-' +
+	  cpfSoNumeros.substring(9, 11));
 }
 

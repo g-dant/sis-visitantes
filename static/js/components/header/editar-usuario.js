@@ -162,7 +162,8 @@ async function atualizarUsuarioLogado() {
 
   const body = {
     email: email === estadoEditarUsuario.emailOriginal ? null : email,
-    senha: senha === "" ? null : senha };
+    senha: senha === "" ? null : senha 
+  };
 
   const response = await fetch("/eu", {
     method: "PATCH",

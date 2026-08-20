@@ -281,18 +281,25 @@ async function salvarAutorizacao() {
 
   const payload = {
 
+    // Dados de VISITANTE
     cpf: document.getElementById("visitante-cpf").value,
     rg: document.getElementById("visitante-rg").value,
     nome: document.getElementById("visitante-nome").value,
     email: document.getElementById("visitante-email").value,
     celular: document.getElementById("visitante-celular").value,
+
+    // Dados de EMPRESA
     empresa_nome: document.getElementById("empresa-nome").value,
     empresa_cnpj: null,
+
+    // Dados de VIATURA
     placa: document.getElementById("veiculo-placa").value,
     marca: document.getElementById("veiculo-marca").value,
     cor: document.getElementById("veiculo-cor").value,
     tipo: document.getElementById("veiculo-tipo").value,
     observacoes_veiculo: document.getElementById("veiculo-observacoes").value,
+
+    // Dados de AUTORIZAÇÃO
     primeiro_dia: document.getElementById("primeiro-dia").value,
     ultimo_dia: document.getElementById("ultimo-dia").value
 

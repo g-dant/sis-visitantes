@@ -4,9 +4,7 @@ from config.database import get_connection
 class HistoricoAutorizacaoRepository:
 
   @staticmethod
-  def listar_por_autorizacao(
-    id_autorizacao: int
-  ):
+  def listar_por_autorizacao(id_autorizacao: int):
 
     conn = get_connection()
 
@@ -35,8 +33,7 @@ class HistoricoAutorizacaoRepository:
 
           ORDER BY h.data_hora
           """,
-          (id_autorizacao,)
-        )
+          (id_autorizacao,))
 
         return cursor.fetchall()
 
@@ -45,11 +42,7 @@ class HistoricoAutorizacaoRepository:
 
 
   @staticmethod
-  def inserir(
-    id_autorizacao: int,
-    id_usuario: int,
-    descricao: str,
-    conn=None):
+  def inserir(id_autorizacao: int, id_usuario: int, descricao: str, conn=None):
 
     conn_externa = conn is not None
     if not conn_externa:
@@ -64,21 +57,10 @@ class HistoricoAutorizacaoRepository:
           INSERT INTO historico_autorizacao (
             id_autorizacao,
             id_usuario,
-            descricao
-          )
-          VALUES (
-            %s,
-            %s,
-            %s
-          )
+            descricao)
+          VALUES (%s, %s, %s)
           RETURNING id
-          """,
-          (
-            id_autorizacao,
-            id_usuario,
-            descricao
-          )
-        )
+          """, (id_autorizacao, id_usuario, descricao))
 
         id_historico = cursor.fetchone()["id"]
 

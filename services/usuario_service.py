@@ -104,7 +104,8 @@ class UsuarioService:
   def validar_email_unico(email: str, id_usuario: int | None = None):
   
     if email is None:
-      raise ValueError("E-mail é obrigatório.")
+      return None # Retornar None = deve haver tratamento para não atualizar e-mail
+      # None significa: e-mail não fornecido no fetch, atualize apenas a senha
   
     email = email.strip()
     usuario = UsuarioRepository.buscar_por_email(email)
