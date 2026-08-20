@@ -5,15 +5,14 @@ class VisitanteRepository:
 
   @staticmethod
   def listar():
-
+  
     conn = get_connection()
-
+  
     try:
-
+  
       with conn.cursor() as cursor:
-
-        cursor.execute(
-          """
+  
+        cursor.execute("""
           SELECT
             v.id,
             v.nome,
@@ -25,34 +24,41 @@ class VisitanteRepository:
 
             v.id_empresa,
             e.nome AS empresa_nome,
-            e.cnpj AS empresa_cnpj
-
+            e.cnpj AS empresa_cnpj,
+  
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM autorizacao a
+                WHERE a.id_visitante = v.id)
+              THEN false
+              ELSE true
+            END AS pode_excluir
+  
           FROM visitante v
-
+  
           JOIN empresa e
             ON e.id = v.id_empresa
-
+  
           ORDER BY v.nome
-          """
-        )
-
+          """)
+  
         return cursor.fetchall()
-
+  
     finally:
       conn.close()
 
 
   @staticmethod
   def buscar_por_id(id_visitante: int):
-
+  
     conn = get_connection()
-
+  
     try:
-
+  
       with conn.cursor() as cursor:
-
-        cursor.execute(
-          """
+  
+        cursor.execute("""
           SELECT
             v.id,
             v.nome,
@@ -61,23 +67,31 @@ class VisitanteRepository:
             v.rg,
             v.cpf,
             v.ativo,
-
+  
             v.id_empresa,
             e.nome AS empresa_nome,
-            e.cnpj AS empresa_cnpj
-
+            e.cnpj AS empresa_cnpj,
+  
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM autorizacao a
+                WHERE a.id_visitante = v.id
+              )
+              THEN false
+              ELSE true
+            END AS pode_excluir
+  
           FROM visitante v
-
+  
           JOIN empresa e
             ON e.id = v.id_empresa
-
-          WHERE v.id = %s
-          """,
-          (id_visitante,)
-        )
-
+  
+          WHERE v.id = %s""",
+          (id_visitante,))
+  
         return cursor.fetchone()
-
+  
     finally:
       conn.close()
 
@@ -94,8 +108,7 @@ class VisitanteRepository:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           INSERT INTO visitante (
             nome,
             email,
@@ -103,29 +116,17 @@ class VisitanteRepository:
             rg,
             cpf,
             id_empresa,
-            ativo
-          )
-          VALUES (
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            %s
-          )
+            ativo)
+          VALUES (%s, %s, %s, %s, %s, %s, %s)
           RETURNING id
           """,
-          (
-            nome,
-            email,
-            celular,
-            rg,
-            cpf,
-            id_empresa,
-            ativo
-          )
-        )
+          (nome,
+           email,
+           celular,
+           rg,
+           cpf,
+           id_empresa,
+           ativo))
 
         id_visitante = cursor.fetchone()["id"]
 
@@ -148,8 +149,7 @@ class VisitanteRepository:
     rg,
     cpf,
     id_empresa,
-    ativo
-  ):
+    ativo):
 
     conn = get_connection()
 
@@ -170,17 +170,7 @@ class VisitanteRepository:
             ativo = %s
           WHERE id = %s
           """,
-          (
-            nome,
-            email,
-            celular,
-            rg,
-            cpf,
-            id_empresa,
-            ativo,
-            id_visitante
-          )
-        )
+          (nome, email, celular, rg, cpf, id_empresa, ativo, id_visitante))
 
         conn.commit()
 
@@ -189,26 +179,28 @@ class VisitanteRepository:
 
 
   @staticmethod
-  def excluir(id_visitante):
+  def excluir(id_visitante: int, conn=None):
 
-    conn = get_connection()
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
 
     try:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           DELETE FROM visitante
-          WHERE id = %s
-          """,
-          (id_visitante,)
-        )
+          WHERE id = %s""", (id_visitante,))
 
+      if not conn_externa:
         conn.commit()
 
     finally:
-      conn.close()
+
+      if not conn_externa:
+        conn.close()
 
 
   @staticmethod
@@ -223,8 +215,7 @@ class VisitanteRepository:
   
       with conn.cursor() as cursor:
   
-        cursor.execute(
-          """
+        cursor.execute("""
           SELECT
             v.id,
             v.nome,
@@ -242,9 +233,7 @@ class VisitanteRepository:
             ON e.id = v.id_empresa
   
           WHERE v.cpf = %s
-          """,
-          (cpf,)
-        )
+          """, (cpf,))
   
         return cursor.fetchone()
   
@@ -267,13 +256,11 @@ class VisitanteRepository:
   
       with conn.cursor() as cursor:
   
-        cursor.execute(
-          """
+        cursor.execute("""
           UPDATE visitante
           SET id_empresa = %s
           WHERE id = %s
-          """,
-          (id_empresa, id_visitante))
+          """, (id_empresa, id_visitante))
   
       if not conn_externa:
         conn.commit()
@@ -282,4 +269,58 @@ class VisitanteRepository:
   
       if not conn_externa:
         conn.close()
+
+  @staticmethod
+  def existe_autorizacao(id_visitante: int, conn=None):
+
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
+
+    try:
+
+      with conn.cursor() as cursor:
+
+        cursor.execute("""
+          SELECT 1
+          FROM autorizacao
+          WHERE id_visitante = %s
+          LIMIT 1
+          """, (id_visitante,))
+
+        return cursor.fetchone() is not None
+
+    finally:
+
+      if not conn_externa:
+        conn.close()
+
+  @staticmethod
+  def excluir_associacoes_veiculo(
+    id_visitante: int,
+    conn=None):
+
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
+
+    try:
+
+      with conn.cursor() as cursor:
+
+        cursor.execute("""
+          DELETE FROM visitante_veiculo
+          WHERE id_visitante = %s
+          """, (id_visitante,))
+
+      if not conn_externa:
+        conn.commit()
+
+    finally:
+
+      if not conn_externa:
+        conn.close()
+
 

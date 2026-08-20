@@ -1,3 +1,5 @@
+from config.database import get_connection
+
 from repositories.veiculo_repository import VeiculoRepository
 
 
@@ -54,7 +56,26 @@ class VeiculoService:
 
   @staticmethod
   def excluir(id_veiculo: int):
-    return VeiculoRepository.excluir(id_veiculo)
+
+    conn = get_connection()
+
+    try:
+
+      if VeiculoRepository.existe_associacao_visitante(
+        id_veiculo, conn=conn):
+        raise ValueError(
+          "O veículo não pode ser excluído porque "
+          "está associado a um ou mais visitantes.")
+
+      VeiculoRepository.excluir(id_veiculo, conn=conn)
+      conn.commit()
+
+    except Exception:
+      conn.rollback()
+      raise
+
+    finally:
+      conn.close()
 
   @staticmethod
   def buscar_por_placa(placa: str):

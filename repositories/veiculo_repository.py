@@ -5,66 +5,73 @@ class VeiculoRepository:
 
   @staticmethod
   def listar():
-
+  
     conn = get_connection()
-
+  
     try:
-
+  
       with conn.cursor() as cursor:
-
-        cursor.execute(
-          """
+  
+        cursor.execute("""
           SELECT
-            id,
-            placa,
-            cor,
-            marca,
-            tipo,
-            observacoes,
-            ativo
-          FROM veiculo
-          ORDER BY placa
-          """
-        )
-
+            v.id,
+            v.placa,
+            v.cor,
+            v.marca,
+            v.tipo,
+            v.observacoes,
+            v.ativo,
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM visitante_veiculo vv
+                WHERE vv.id_veiculo = v.id)
+              THEN false
+              ELSE true
+            END AS pode_excluir
+          FROM veiculo v
+          ORDER BY v.placa
+          """)
+  
         return cursor.fetchall()
-
+  
     finally:
       conn.close()
-
 
   @staticmethod
-  def buscar_por_id(
-    id_veiculo: int
-  ):
-
+  def buscar_por_id(id_veiculo: int):
+  
     conn = get_connection()
-
+  
     try:
-
+  
       with conn.cursor() as cursor:
-
-        cursor.execute(
-          """
+  
+        cursor.execute("""
           SELECT
-            id,
-            placa,
-            cor,
-            marca,
-            tipo,
-            observacoes,
-            ativo
-          FROM veiculo
-          WHERE id = %s
-          """,
-          (id_veiculo,)
-        )
-
+            v.id,
+            v.placa,
+            v.cor,
+            v.marca,
+            v.tipo,
+            v.observacoes,
+            v.ativo,
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM visitante_veiculo vv
+                WHERE vv.id_veiculo = v.id)
+              THEN false
+              ELSE true
+            END AS pode_excluir
+          FROM veiculo v
+          WHERE v.id = %s
+          """, (id_veiculo,))
+  
         return cursor.fetchone()
-
+  
     finally:
       conn.close()
-
 
   @staticmethod
   def inserir(
@@ -74,8 +81,7 @@ class VeiculoRepository:
     tipo: str | None,
     observacoes: str | None,
     ativo: bool,
-    conn=None
-  ):
+    conn=None):
 
     conn_externa = conn is not None
     if not conn_externa:
@@ -85,35 +91,24 @@ class VeiculoRepository:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           INSERT INTO veiculo (
             placa,
             cor,
             marca,
             tipo,
             observacoes,
-            ativo
-          )
+            ativo)
           VALUES (
-            %s,
-            %s,
-            %s,
-            %s,
-            %s,
-            %s
-          )
+            %s, %s, %s, %s, %s, %s)
           RETURNING id
-          """,
-          (
+          """, (
             placa,
             cor,
             marca,
             tipo,
             observacoes,
-            ativo
-          )
-        )
+            ativo))
 
         id_veiculo = cursor.fetchone()["id"]
 
@@ -127,7 +122,6 @@ class VeiculoRepository:
       if not conn_externa:
         conn.close()
 
-
   @staticmethod
   def atualizar_tudo(
     id_veiculo: int,
@@ -136,8 +130,7 @@ class VeiculoRepository:
     marca: str | None,
     tipo: str | None,
     observacoes: str | None,
-    ativo: bool
-  ):
+    ativo: bool):
 
     conn = get_connection()
 
@@ -156,48 +149,43 @@ class VeiculoRepository:
             observacoes = %s,
             ativo = %s
           WHERE id = %s
-          """,
-          (
+          """, (
             placa,
             cor,
             marca,
             tipo,
             observacoes,
             ativo,
-            id_veiculo
-          )
-        )
+            id_veiculo))
 
         conn.commit()
 
     finally:
       conn.close()
 
-
   @staticmethod
-  def excluir(
-    id_veiculo: int
-  ):
+  def excluir(id_veiculo: int, conn=None):
 
-    conn = get_connection()
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
 
     try:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
-          DELETE FROM veiculo
-          WHERE id = %s
-          """,
-          (id_veiculo,)
-        )
+        cursor.execute("""
+          DELETE FROM veiculo WHERE id = %s""",
+          (id_veiculo,))
 
+      if not conn_externa:
         conn.commit()
 
     finally:
-      conn.close()
 
+      if not conn_externa:
+        conn.close()
 
   @staticmethod
   def buscar_por_placa(placa: str, conn=None):
@@ -210,8 +198,7 @@ class VeiculoRepository:
   
       with conn.cursor() as cursor:
   
-        cursor.execute(
-          """
+        cursor.execute("""
           SELECT
             id,
             placa,
@@ -221,12 +208,38 @@ class VeiculoRepository:
             observacoes,
             ativo
           FROM veiculo
-          WHERE UPPER(placa) = UPPER(%s)
-          """,
-          (placa,))
+          WHERE UPPER(placa) = UPPER(%s)""", (placa,))
   
         return cursor.fetchone()
   
     finally:
+      if not conn_externa:
+        conn.close()
+
+  @staticmethod
+  def existe_associacao_visitante(
+    id_veiculo: int,
+    conn=None):
+
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
+
+    try:
+
+      with conn.cursor() as cursor:
+
+        cursor.execute("""
+          SELECT 1
+          FROM visitante_veiculo
+          WHERE id_veiculo = %s
+          LIMIT 1
+          """, (id_veiculo,))
+
+        return cursor.fetchone() is not None
+
+    finally:
+
       if not conn_externa:
         conn.close()

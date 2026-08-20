@@ -1,7 +1,9 @@
+from config.database import get_connection
+
 from utils.normalizacao import somente_digitos
+
 from repositories.empresa_repository import EmpresaRepository
 from repositories.visitante_repository import VisitanteRepository
-from utils.normalizacao import somente_digitos
 
 
 class VisitanteService:
@@ -61,8 +63,32 @@ class VisitanteService:
 
 
   @staticmethod
-  def excluir(id_visitante):
-    return VisitanteRepository.excluir(id_visitante)
+  def excluir(id_visitante: int):
+
+    conn = get_connection()
+
+    try:
+
+      if VisitanteRepository.existe_autorizacao(
+        id_visitante, conn=conn):
+        raise ValueError(
+          "O visitante não pode ser excluído porque "
+          "está associado a uma ou mais autorizações.")
+
+      VisitanteRepository.excluir_associacoes_veiculo(
+        id_visitante, conn=conn)
+
+      VisitanteRepository.excluir(
+        id_visitante, conn=conn)
+
+      conn.commit()
+
+    except Exception:
+      conn.rollback()
+      raise
+
+    finally:
+      conn.close()
 
 
   @staticmethod

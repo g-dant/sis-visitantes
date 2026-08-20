@@ -5,49 +5,81 @@ class EmpresaRepository:
 
   @staticmethod
   def listar():
-
+  
     conn = get_connection()
-
+  
     try:
-
+  
       with conn.cursor() as cursor:
-
+  
         cursor.execute("""
           SELECT
-          id, nome, cnpj, ativo
-          FROM empresa
-          ORDER BY nome
+            e.id,
+            e.nome,
+            e.cnpj,
+            e.ativo,
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM autorizacao a
+                WHERE a.id_empresa = e.id)
+              OR EXISTS (
+                SELECT 1
+                FROM visitante v
+                WHERE v.id_empresa = e.id)
+              THEN false
+              ELSE true
+            END AS pode_excluir
+          FROM empresa e
+          ORDER BY e.nome
           """)
-
+  
         return cursor.fetchall()
-
+  
     finally:
       conn.close()
-
 
   @staticmethod
   def buscar_por_id(id_empresa: int):
-
+  
     conn = get_connection()
-
+  
     try:
-
+  
       with conn.cursor() as cursor:
-
-        cursor.execute(
-          """
+  
+        cursor.execute("""
           SELECT
-          id, nome, cnpj, ativo
-          FROM empresa
-          WHERE id = %s
+            e.id,
+            e.nome,
+            e.cnpj,
+            e.ativo,
+  
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM autorizacao a
+                WHERE a.id_empresa = e.id
+              )
+              OR EXISTS (
+                SELECT 1
+                FROM visitante v
+                WHERE v.id_empresa = e.id
+              )
+              THEN false
+              ELSE true
+            END AS pode_excluir
+  
+          FROM empresa e
+  
+          WHERE e.id = %s
           """,
           (id_empresa,))
-
+  
         return cursor.fetchone()
-
+  
     finally:
       conn.close()
-
 
   @staticmethod
   def inserir(
@@ -84,7 +116,6 @@ class EmpresaRepository:
       if not conn_externa:
         conn.close()
 
-
   @staticmethod
   def atualizar_tudo(
     id_empresa: int,
@@ -117,28 +148,31 @@ class EmpresaRepository:
     finally:
       conn.close()
 
-
   @staticmethod
-  def excluir(id_empresa: int):
+  def excluir(id_empresa: int, conn=None):
 
-    conn = get_connection()
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
 
     try:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           DELETE FROM empresa
           WHERE id = %s
           """,
           (id_empresa,))
 
+      if not conn_externa:
         conn.commit()
 
     finally:
-      conn.close()
 
+      if not conn_externa:
+        conn.close()
 
   @staticmethod
   def buscar_por_nome_parcial(nome: str):
@@ -185,5 +219,56 @@ class EmpresaRepository:
         return cursor.fetchone()
   
     finally:
+      if not conn_externa:
+        conn.close()
+
+  @staticmethod
+  def existe_autorizacao(id_empresa: int, conn=None):
+
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
+
+    try:
+
+      with conn.cursor() as cursor:
+
+        cursor.execute("""
+          SELECT 1
+          FROM autorizacao
+          WHERE id_empresa = %s
+          LIMIT 1""", (id_empresa,))
+
+        return cursor.fetchone() is not None
+
+    finally:
+
+      if not conn_externa:
+        conn.close()
+
+
+  @staticmethod
+  def existe_visitante(id_empresa: int, conn=None):
+
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
+
+    try:
+
+      with conn.cursor() as cursor:
+
+        cursor.execute("""
+          SELECT 1
+          FROM visitante
+          WHERE id_empresa = %s
+          LIMIT 1""", (id_empresa,))
+
+        return cursor.fetchone() is not None
+
+    finally:
+
       if not conn_externa:
         conn.close()

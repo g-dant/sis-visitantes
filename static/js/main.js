@@ -193,7 +193,7 @@ async function pesquisarEmpresa() {
   clearTimeout(timeoutEmpresa);
 
   timeoutEmpresa = setTimeout(async () => {
-    const response = await fetch(`/empresas?nome=${encodeURIComponent(nome)}`);
+    const response = await fetch(`/empresas/busca?nome=${encodeURIComponent(nome)}`);
     if (!response.ok) {
       return;
     }

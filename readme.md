@@ -1646,9 +1646,20 @@ participa_colisao = false
 
 Consequentemente, ela não bloqueia a segunda autorização.
 
+# 49. Cadastros de visitantes, empresas e veículos
+
+Podem ser consultados na região de dashboard, no canto direito. Permitem corrigir as informações cadastrais se os usuários possuem as credenciais adequadas ("VISITANTE_EDITAR", "EMPRESA_EDITAR" e "VEICULO_EDITAR", respectivamente). Os dados também podem ser excluídos (se houver, respectivamente, as credenciais de "VISITANTE_EXCLUIR", "EMPRESA_EXCLUIR" e "VEICULO_EXCLUIR"). Porém, a exclusão apenas poderá ocorrer se não houver dependência dos registros com outros campos do banco de dados:
+
+| Cadastro      | Pode excluir quando                                                           | Antes de excluir                                                                     |
+| ------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **Visitante** | Não existir nenhuma `autorizacao.id_visitante` apontando para ele             | Se existirem registros em `visitante_veiculo`, remover essas associações manualmente |
+| **Empresa**   | Não existir `visitante.id_empresa` **e** não existir `autorizacao.id_empresa` | Nada                                                                                 |
+| **Veículo**   | Não existir nenhuma associação em `visitante_veiculo`                         | Nada                                                                                 |
+Para uma compreensão mais abrangente de tais regras, recomenda-se consulta ao esquema de dados da seção a seguir (seção 50 - "Modelo de dados resumido") 
+
 ---
 
-# 49. Modelo de dados resumido
+# 50. Modelo de dados resumido
 
 ```text
 ┌───────────────┐
@@ -1678,7 +1689,7 @@ Consequentemente, ela não bloqueia a segunda autorização.
 
 ---
 
-# 50. Docker
+# 51. Docker
 
 O projeto possui um `Dockerfile` baseado em:
 
@@ -1720,7 +1731,7 @@ NO_PROXY
 
 ---
 
-# 51. Banco de dados
+# 52. Banco de dados
 
 O schema inicial encontra-se em:
 
@@ -1743,7 +1754,7 @@ O schema cria:
 
 ---
 
-# 52. Views principais
+# 53. Views principais
 
 ## autorizacao_consulta
 
@@ -1785,7 +1796,7 @@ para cada estado.
 
 ---
 
-# 53. Regras de negócio essenciais
+# 54. Regras de negócio essenciais
 
 As regras mais importantes do sistema podem ser resumidas assim.
 
