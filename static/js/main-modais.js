@@ -27,6 +27,11 @@ const campos_editaveis = [
   "primeiro-dia", 
   "ultimo-dia"];
 
+const campos_periodo = [
+  "primeiro-dia",
+  "ultimo-dia"
+];
+
 let idAutorizacaoEmEdicao = null;
 let idStatusAutorizacao = null;
 let idSetorSolicitante = null;
@@ -56,6 +61,20 @@ function setModalBloqueado(bloqueado) {
 
     campo.readOnly = bloqueado;
     campo.classList.toggle("campo-readonly", bloqueado);
+  }
+}
+
+function liberarPeriodo() {
+
+  for (const id of campos_periodo) {
+
+    const campo = document.getElementById(id);
+    if (!campo) {
+      continue;
+    }
+
+    campo.readOnly = false;
+    campo.classList.remove("campo-readonly");
   }
 }
 
@@ -96,23 +115,13 @@ function configurarModoVisualizacao() {
 }
 
 function configurarModoEdicao() {
-
-  setModalBloqueado(false);
-
-  const cpf = document.getElementById("visitante-cpf");
-  const rg = document.getElementById("visitante-rg");
-
-  cpf.readOnly = true;
-  rg.readOnly = true;
-
-  cpf.classList.add("campo-readonly");
-  rg.classList.add("campo-readonly");
+  setModalBloqueado(true);
+  liberarPeriodo();
 
   exibirElementos(botoes_visitante, false);
-  exibirElementos(botoes_veiculo, true);
+  exibirElementos(botoes_veiculo, false);
   exibirElementos(botoes_empresa, false);
   exibirElementos(botoes_salvar, true);
-
   exibirElementos(controle_qr_code, false);
 }
 

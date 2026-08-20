@@ -243,8 +243,6 @@ async function salvarEdicao() {
     ultimo_dia: document.getElementById("ultimo-dia").value
   };
 
-  console.log(payload);
-
   const response =
     await fetch(
       `/autorizacoes/${idAutorizacaoEmEdicao}`, {

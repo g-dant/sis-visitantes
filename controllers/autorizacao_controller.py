@@ -57,13 +57,8 @@ def atualizar_autorizacao(
   
   try:
   
-    AutorizacaoService.atualizar_tudo(
+    AutorizacaoService.atualizar_periodo(
       id_autorizacao=id_autorizacao,
-      id_visitante=request.id_visitante,
-      id_empresa=request.id_empresa,
-      id_status_autorizacao=request.id_status_autorizacao,
-      id_setor_solicitante=request.id_setor_solicitante,
-      id_veiculo=request.id_veiculo,
       primeiro_dia=request.primeiro_dia,
       ultimo_dia=request.ultimo_dia,
       id_usuario_logado=sessao["id_usuario"])

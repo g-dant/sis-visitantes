@@ -246,5 +246,61 @@ class AutorizacaoService:
 
     return {
       "sucesso": True,
-      "mensagem": "Importação realizada com sucesso."
-    }
+      "mensagem": "Importação realizada com sucesso." }
+
+  @staticmethod
+  def atualizar_periodo(
+      id_autorizacao: int,
+      primeiro_dia,
+      ultimo_dia,
+      id_usuario_logado: int):
+  
+    autorizacao_atual = AutorizacaoRepository.buscar_por_id(
+      id_autorizacao)
+  
+    status_atual = StatusAutorizacaoRepository.buscar_por_id(
+      autorizacao_atual["id_status_autorizacao"])
+  
+    if status_atual["participa_colisao"]:
+  
+      colisao = AutorizacaoRepository.buscar_colisao(
+        cpf=autorizacao_atual["cpf"],
+        primeiro_dia=primeiro_dia,
+        ultimo_dia=ultimo_dia,
+        id_autorizacao_ignorada=id_autorizacao)
+  
+      if colisao is not None:
+  
+        raise ValueError(
+          "Erro: uma autorização para "
+          "esse mesmo visitante, no "
+          f"prazo de "
+          f"{colisao['primeiro_dia'].strftime('%d/%m/%Y')} "
+          "a "
+          f"{colisao['ultimo_dia'].strftime('%d/%m/%Y')}, "
+          "já foi emitida. Os "
+          "intervalos de tempo "
+          "não podem colidir.")
+  
+    periodo_anterior = (
+      f"{autorizacao_atual['primeiro_dia']} "
+      "até "
+      f"{autorizacao_atual['ultimo_dia']}")
+  
+    periodo_novo = (
+      f"{primeiro_dia} "
+      "até "
+      f"{ultimo_dia}")
+  
+    AutorizacaoRepository.atualizar_periodo(
+      id_autorizacao=id_autorizacao,
+      primeiro_dia=primeiro_dia,
+      ultimo_dia=ultimo_dia)
+  
+    if periodo_anterior != periodo_novo:
+  
+      HistoricoAutorizacaoService.registrar_periodo_alterado(
+        id_autorizacao=id_autorizacao,
+        id_usuario=id_usuario_logado,
+        periodo_anterior=periodo_anterior,
+        periodo_novo=periodo_novo)

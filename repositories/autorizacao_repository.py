@@ -295,8 +295,7 @@ class AutorizacaoRepository:
           AND a.ultimo_dia >= %s
           AND (
             %s IS NULL
-            OR a.id <> %s
-          )
+            OR a.id <> %s)
 
         LIMIT 1
         """, (cpf, ultimo_dia, primeiro_dia,
@@ -305,5 +304,29 @@ class AutorizacaoRepository:
 
         return cursor.fetchone()
 
+    finally:
+      conn.close()
+
+
+  @staticmethod
+  def atualizar_periodo(id_autorizacao: int,
+      primeiro_dia, ultimo_dia):
+  
+    conn = get_connection()
+  
+    try:
+  
+      with conn.cursor() as cursor:
+  
+        cursor.execute("""
+          UPDATE autorizacao
+          SET
+            primeiro_dia = %s,
+            ultimo_dia = %s
+          WHERE id = %s
+          """, (primeiro_dia, ultimo_dia, id_autorizacao))
+  
+        conn.commit()
+  
     finally:
       conn.close()
