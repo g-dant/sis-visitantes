@@ -46,3 +46,10 @@ def criar_empresa(request: EmpresaRequest, sessao = Depends(exigir_permissao("EM
     ativo=request.ativo)
 
   return { "id": id_empresa }
+
+@router.delete("/empresas/{id_empresa}")
+def excluir_empresa(id_empresa: int, sessao = Depends(exigir_permissao("EMPRESA_EXCLUIR"))):
+
+  EmpresaService.excluir(id_empresa)
+
+  return { "mensagem": "Empresa excluída com sucesso" }

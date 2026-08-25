@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -19,27 +20,33 @@
   <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
 
   <!-- JSs internos -->
-  <script src="/static/js/utils.js" defer></script>
-  <script src="/static/js/mascaras.js" defer></script>
-  <script src="/static/js/config.js" defer></script>
+  <script src="/static/js/ferramentas-gerais/utils.js" defer></script>
+  <script src="/static/js/ferramentas-gerais/mascaras.js" defer></script>
+  <script src="/static/js/ferramentas-gerais/config.js" defer></script>
+  <script src="/static/js/ferramentas-gerais/ordenacao.js"></script>
+  <script src="/static/js/ferramentas-gerais/auth.js"></script>
+  <script src="/static/js/ferramentas-gerais/filtragem.js"></script>
+  <script src="/static/js/ferramentas-gerais/paginacao.js"></script>
+
+  <script src="/static/js/componentes-gerais/header/header.js" defer></script>
+  <script src="/static/js/componentes-gerais/header/logout.js" defer></script>
+  <script src="/static/js/componentes-gerais/header/editar-usuario.js" defer></script>
   
-  <script src="/static/js/ordenacao.js"></script>
-  <script src="/static/js/buscas.js" defer></script>
-  <script src="/static/js/paginar.js" defer></script>
-  <script src="/static/js/painel.js" defer></script>
-  <script src="/static/js/qrcode.js" defer></script>
+  <script src="/static/js/telas-especificas/main/painel/painel.js" defer></script>
+  <script src="/static/js/telas-especificas/main/painel/painel-autorizacao.js" defer></script>
 
-  <script src="/static/js/components/header/header.js" defer></script>
-  <script src="/static/js/components/header/logout.js" defer></script>
-  <script src="/static/js/components/header/editar-usuario.js" defer></script>
+  <script src="/static/js/telas-especificas/main/visitantes/visitantes.js" defer></script>
+  <script src="/static/js/telas-especificas/main/empresas/empresas.js" defer></script>
+  <script src="/static/js/telas-especificas/main/veiculos/veiculos.js" defer></script>
 
-  <script src="/static/js/main-inicializar.js" defer></script>
-  <script src="/static/js/main-modais.js" defer></script>
-  <script src="/static/js/importar-autorizacoes.js" defer></script>
-  <script src="/static/js/auth.js"></script>
-  <script src="/static/js/main.js" defer></script>
-  <script src="/static/js/painel-autorizacao.js" defer></script>
-
+  <script src="/static/js/telas-especificas/main/buscas.js" defer></script>
+  <script src="/static/js/telas-especificas/main/paginar.js" defer></script>
+  <script src="/static/js/telas-especificas/main/main-inicializar.js" defer></script>
+  <script src="/static/js/telas-especificas/main/main.js" defer></script>
+  <script src="/static/js/telas-especificas/main/main-modais.js" defer></script>
+  <script src="/static/js/telas-especificas/main/importar-autorizacoes.js" defer></script>
+  <script src="/static/js/telas-especificas/main/qrcode.js" defer></script>
+  
 </head>
 
 {% set mostrar_link_main = false %}
@@ -62,7 +69,16 @@
   {% include "main/modal_leitor_qr_code.html" %}
   {% include "main/modal_importacao.html" %}
   {% include "main/modal_revisao_importacao.html" %}
+  
   {% include "components/header_editar_usuario_logado/modal_editar_usuario_logado.html" %}
+  
+  {% include "main/visitantes/modal_cadastro_visitantes.html" %}
+  {% include "main/empresas/modal_cadastro_empresas.html" %}
+  {% include "main/veiculos/modal_cadastro_veiculos.html" %}
+
+  {% include "main/visitantes/modal_novo_visitante.html" %}
+  {% include "main/empresas/modal_nova_empresa.html" %}
+  {% include "main/veiculos/modal_novo_veiculo.html" %}
 
 </body>
 

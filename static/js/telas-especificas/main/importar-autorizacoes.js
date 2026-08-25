@@ -50,7 +50,6 @@ async function importarArquivoAutorizacoes() {
 
   const resultado = await response.json();
   resultadoImportacao = resultado;
-  console.log(resultado);
   preencherResumoImportacao(resultado);
   renderizarTabelaImportacao(resultado);
 

@@ -1,4 +1,19 @@
 let usuarios = [];
+let paginacaoUsuarios;
+
+const filtroUsuarios = criarFiltroTabela({
+
+  obterDados: () => usuarios,
+  campoTextoId: "filtro-usuarios",
+  camposTexto: [ "nome", "email", "telefone", "tipo_nome", "setor_descricao", "credencial_nome" ],
+
+  filtros: [{
+    elementoId: "filtro-ativo",
+    aplicar: (usuario, valor) => (valor === "") || (String(usuario.ativo) === valor)
+  }],
+
+  aoFiltrar: () => { paginacaoUsuarios.reiniciar(); }
+});
 
 const estadoModalUsuario = {
   modo: "novo",
@@ -39,15 +54,13 @@ function renderizarUsuarios() {
 
   const tbody = document.getElementById("usuarios-tbody");
   tbody.innerHTML = "";
-
-  const usuariosFiltrados = obterUsuariosFiltrados();
-  const usuariosPagina = obterUsuariosPaginaAtual(usuariosFiltrados);
+  const usuariosPagina = paginacaoUsuarios.obterDadosDaPagina();
 
   for (const usuario of usuariosPagina) {
     tbody.appendChild(criarLinhaUsuario(usuario));
   }
 
-  renderizarPaginacaoUsuarios();
+  paginacaoUsuarios.renderizar();
 }
 
 async function buscarUsuarios() {
@@ -65,20 +78,23 @@ async function carregarUsuarios() {
   renderizarUsuarios();
 }
 
+paginacaoUsuarios = criarPaginacaoTabela({
+  containerId: "usuarios-pagination",
+  seletorQuantidade: "usuarios-qtd-registros",
+  obterDados: () => filtroUsuarios.obterDadosFiltrados(),
+  aoMudarPagina: () => renderizarUsuarios()
+});
+
 document.addEventListener(
   "DOMContentLoaded",
   async () => {
     try {
       await exigirPermissao("ROTA_USUARIOS");
-
       habilitarValidacaoEmTempoRealUsuario();
-
       carregarUsuarioCabecalho();
+      filtroUsuarios.inicializar();
+      paginacaoUsuarios.inicializar();
       await carregarCombosUsuario();
-
-      document.getElementById("usuarios-qtd-registros")
-        .addEventListener("change", alterarQuantidadeUsuarios);
-
       await carregarUsuarios();
     } catch (erro) {
       console.error(erro);
@@ -127,7 +143,6 @@ async function abrirEditarUsuario(idUsuario) {
   }
 
   const usuario = await response.json();
-  console.log("Usuário:", usuario);
 
   await Promise.all([
     preencherSelect(document.getElementById("usuario-tipo"), "/tipos", "id", "nome"),
@@ -267,8 +282,6 @@ function obterResultadoValidacao(campo) {
 }
 
 function validarCampo(campo) {
-
-  console.log("Validando:", campo);
 
   if (!campo) {
     console.error("Campo nulo!");

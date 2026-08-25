@@ -269,3 +269,33 @@ class VisitanteVeiculoRepository:
     finally:
       conn.close()
 
+  @staticmethod
+  def excluir_por_veiculo(
+    id_veiculo: int,
+    conn=None
+  ):
+  
+    conn_externa = (conn is not None)
+  
+    if not conn_externa:
+      conn = get_connection()
+  
+    try:
+  
+      with conn.cursor() as cursor:
+  
+        cursor.execute(
+          """
+          DELETE FROM visitante_veiculo
+          WHERE id_veiculo = %s
+          """,
+          (id_veiculo,)
+        )
+  
+      if not conn_externa:
+        conn.commit()
+  
+    finally:
+  
+      if not conn_externa:
+        conn.close()

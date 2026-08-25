@@ -11,7 +11,7 @@ class VeiculoRepository:
     try:
   
       with conn.cursor() as cursor:
-  
+          
         cursor.execute("""
           SELECT
             v.id,
@@ -25,7 +25,13 @@ class VeiculoRepository:
               WHEN EXISTS (
                 SELECT 1
                 FROM visitante_veiculo vv
-                WHERE vv.id_veiculo = v.id)
+                WHERE vv.id_veiculo = v.id
+              )
+              OR EXISTS (
+                SELECT 1
+                FROM autorizacao a
+                WHERE a.id_veiculo = v.id
+              )
               THEN false
               ELSE true
             END AS pode_excluir

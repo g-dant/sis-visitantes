@@ -12,16 +12,17 @@
   <link rel="stylesheet" href="/static/css/main.css">
   <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
 
-  <script src="/static/js/utils.js" defer></script>
-  <script src="/static/js/config.js" defer></script>
-  <script src="/static/js/auth.js"></script>
-  <script src="/static/js/usuarios.js" defer></script>
-  <script src="/static/js/paginar-usuarios.js" defer></script>
-  <script src="/static/js/buscas-usuarios.js" defer></script>
+  <script src="/static/js/ferramentas-gerais/utils.js" defer></script>
+  <script src="/static/js/ferramentas-gerais/config.js" defer></script>
+  <script src="/static/js/ferramentas-gerais/auth.js"></script>
+  <script src="/static/js/ferramentas-gerais/filtragem.js"></script>
+  <script src="/static/js/ferramentas-gerais/paginacao.js"></script>
 
-  <script src="/static/js/components/header/editar-usuario.js" defer></script> 
-  <script src="/static/js/components/header/header.js" defer></script>
-  <script src="/static/js/components/header/logout.js" defer></script>
+  <script src="/static/js/telas-especificas/usuarios/usuarios.js" defer></script>
+
+  <script src="/static/js/componentes-gerais/header/editar-usuario.js" defer></script> 
+  <script src="/static/js/componentes-gerais/header/header.js" defer></script>
+  <script src="/static/js/componentes-gerais/header/logout.js" defer></script>
 
 </head>
 
@@ -34,6 +35,7 @@
   {% include "components/header_editar_usuario_logado/header_editar_usuario_logado.html" %}
 
   <div class="container">
+
     <div class="header">
       <h2>Gerenciamento de Usuários</h2>
     </div>

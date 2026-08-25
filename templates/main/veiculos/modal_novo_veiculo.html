@@ -1,0 +1,83 @@
+<div id="modalNovoVeiculo" class="modal-bg">
+
+  <div class="modal">
+
+    <button
+      type="button"
+      class="modal-fechar"
+      onclick="fecharModalNovoVeiculo()"
+      aria-label="Fechar">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 id="modal-novo-veiculo-titulo">Novo veículo</h2>
+
+    <div class="form-grid">
+
+      <div class="full">
+        <label for="novo-veiculo-placa">
+          Placa
+        </label>
+
+        <input type="text" id="novo-veiculo-placa" required>
+      </div>
+
+      <div>
+        <label for="novo-veiculo-marca">Marca</label>
+        <input type="text" id="novo-veiculo-marca">
+      </div>
+
+      <div>
+        <label for="novo-veiculo-cor">Cor</label>
+        <input type="text" id="novo-veiculo-cor">
+      </div>
+
+      <div>
+        <label for="novo-veiculo-tipo">Tipo</label>
+        <input type="text" id="novo-veiculo-tipo">
+      </div>
+
+      <div class="full">
+        <label for="novo-veiculo-observacoes">
+          Observações
+        </label>
+
+        <textarea id="novo-veiculo-observacoes" rows="4"></textarea>
+      </div>
+
+    </div>
+    <hr>
+
+    <div class="usuario-ativo">
+
+      <label>
+        <input
+          type="checkbox"
+          id="novo-veiculo-ativo"
+          checked>
+
+        Ativo
+      </label>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button
+        type="button"
+        class="btn"
+        onclick="fecharModalNovoVeiculo()">
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        id="btn-salvar-novo-veiculo"
+        class="btn btn-primary"
+        onclick="salvarNovoVeiculo()">
+        Salvar
+      </button>
+
+    </div>
+  </div>
+</div>

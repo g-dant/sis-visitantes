@@ -1,0 +1,49 @@
+<div id="modalNovaEmpresa" class="modal-bg">
+
+  <div class="modal">
+
+    <button type="button" class="modal-fechar" onclick="fecharModalNovaEmpresa()" aria-label="Fechar">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 id="modal-nova-empresa-titulo">Nova empresa</h2>
+
+    <div class="form-grid">
+
+      <div class="full">
+        <label for="nova-empresa-nome">Nome</label>
+        <input type="text" id="nova-empresa-nome" required>
+      </div>
+
+      <div class="full">
+        <label for="nova-empresa-cnpj">CNPJ</label>
+        <input type="text" id="nova-empresa-cnpj">
+      </div>
+
+    </div>
+
+    <hr>
+
+    <div class="usuario-ativo">
+
+      <label>
+        <input type="checkbox" id="nova-empresa-ativo" checked>
+        Ativo
+      </label>
+
+    </div>
+
+    <div class="modal-actions">
+
+      <button type="button" class="btn" onclick="fecharModalNovaEmpresa()">
+        Cancelar
+      </button>
+
+      <button type="button" id="btn-salvar-nova-empresa" 
+        class="btn btn-primary" onclick="salvarNovaEmpresa()">
+        Salvar
+      </button>
+
+    </div>
+  </div>
+</div>

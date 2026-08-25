@@ -111,3 +111,12 @@ function formatarCpf(cpfSoNumeros) {
 	  cpfSoNumeros.substring(9, 11));
 }
 
+function escapeChars(strIn) {
+
+  return strIn
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}

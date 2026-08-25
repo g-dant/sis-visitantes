@@ -314,6 +314,11 @@ td {
   overflow: auto;
   border-radius: 14px;
   padding: 20px;
+  position: relative;
+}
+
+.modal-wide {
+  max-width: 1500px; !important
 }
 
 .tabs {

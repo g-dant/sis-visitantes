@@ -1,0 +1,89 @@
+<div id="modalNovoVisitante" class="modal-bg">
+
+  <div class="modal">
+
+    <button type="button" class="modal-fechar" 
+      onclick="fecharModalNovoVisitante()"
+      aria-label="Fechar">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 id="modal-novo-visitante-titulo">Novo visitante</h2>
+
+    <div class="form-grid">
+
+      <div class="full">
+        <label for="novo-visitante-nome">Nome</label>
+        <input type="text" id="novo-visitante-nome" required>
+      </div>
+
+      <div>
+        <label for="novo-visitante-email">
+	  E-mail
+        </label>
+
+        <input type="email" id="novo-visitante-email">
+      </div>
+
+      <div>
+        <label for="novo-visitante-telefone">
+          Telefone
+        </label>
+
+        <input type="text" id="novo-visitante-telefone">
+      </div>
+
+
+      <div>
+        <label for="novo-visitante-rg">RG</label>
+        <input type="text" id="novo-visitante-rg">
+      </div>
+
+
+      <div>
+        <label for="novo-visitante-cpf">CPF</label>
+        <input type="text" id="novo-visitante-cpf" required>
+      </div>
+
+
+      <div class="full">
+
+        <label for="novo-visitante-empresa">
+          Empresa
+        </label>
+
+        <select id="novo-visitante-empresa">
+	  <option value="">
+	    Selecione uma empresa
+	  </option>
+	</select>
+
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="usuario-ativo">
+
+      <label>
+        <input type="checkbox" id="novo-visitante-ativo" checked>
+        Ativo
+      </label>
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button type="button" class="btn"
+        onclick="fecharModalNovoVisitante()">
+        Cancelar
+      </button>
+
+      <button type="button" id="btn-salvar-novo-visitante"
+        class="btn btn-primary" onclick="salvarNovoVisitante()">
+        Salvar
+      </button>
+
+    </div>
+  </div>
+</div>

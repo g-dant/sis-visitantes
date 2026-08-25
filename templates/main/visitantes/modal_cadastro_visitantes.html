@@ -1,0 +1,84 @@
+<div id="modalCadastroVisitantes" class="modal-bg">
+
+  <div class="modal modal-wide">
+
+    <button type="button" class="modal-fechar" 
+      onclick="fecharModalCadastroVisitantes()" aria-label="Fechar">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2>Cadastro de Visitantes</h2>
+
+    <!-- Filtros e ações -->
+    <div class="toolbar">
+      <div class="toolbar-filtros">
+
+          <input type="text" id="filtro-visitantes" placeholder="Buscar visitante...">
+
+          <select id="filtro-visitantes-ativo">
+            <option value="">Todos</option>
+            <option value="true">Ativos</option>
+            <option value="false">Inativos</option>
+          </select>
+
+      </div>
+
+      {% if possui_permissao(usuario, "VISITANTE_CRIAR") %}
+      <button id="btn-novo-visitante" class="btn btn-primary" 
+        onclick="abrirModalNovoVisitante()">
+        <i class="fa-solid fa-user-plus"></i>
+        Novo visitante
+      </button>
+      {% endif %}
+    </div>
+
+    <!-- Tabela -->
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>RG</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Empresa</th>
+            <th>Ativo</th>
+            <th>Ações</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="visitantes-tbody"></tbody>
+      </table>
+    </div>
+
+
+    <!-- Paginação -->
+    <div class="pagination-container">
+
+      <div class="page-size">
+
+        <label for="visitantes-qtd-registros">
+          Exibir:
+        </label>
+
+        <select id="visitantes-qtd-registros">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="-1">Todos</option>
+        </select>
+
+      </div>
+
+      <div class="pagination">
+        <div id="visitantes-pagination" class="pagination"></div>
+      </div>
+      
+    </div>
+  </div>
+</div>
