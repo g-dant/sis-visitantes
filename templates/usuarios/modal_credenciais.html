@@ -1,0 +1,101 @@
+<div id="modalCadastroCredenciais" class="modal-bg">
+
+  <div class="modal">
+
+    <button
+      type="button"
+      class="modal-fechar"
+      onclick="fecharModalCadastroCredenciais()"
+      aria-label="Fechar">
+
+      <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+    <h2>Cadastro de Credenciais</h2>
+
+    <!-- Filtros e ações -->
+    <div class="toolbar">
+
+      <div class="toolbar-filtros">
+
+        <input
+          type="text"
+          id="filtro-credenciais"
+          placeholder="Buscar credencial...">
+
+        <select id="filtro-credenciais-ativo">
+
+          <option value="">Todos</option>
+          <option value="true">Ativos</option>
+          <option value="false">Inativos</option>
+
+        </select>
+
+      </div>
+
+      <button
+        id="btn-nova-credencial"
+        class="btn btn-primary"
+        onclick="abrirModalNovaCredencial()">
+
+        <i class="fa-solid fa-key"></i>
+        Nova credencial
+
+      </button>
+
+    </div>
+
+    <!-- Tabela -->
+    <div class="table-container">
+
+      <table class="data-table">
+
+        <thead>
+
+          <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ativo</th>
+            <th>Ações</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="credenciais-tbody"></tbody>
+
+      </table>
+
+    </div>
+
+    <!-- Paginação -->
+    <div class="pagination-container">
+
+      <div class="page-size">
+
+        <label for="credenciais-qtd-registros">
+          Exibir:
+        </label>
+
+        <select id="credenciais-qtd-registros">
+
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="-1">Todos</option>
+
+        </select>
+
+      </div>
+
+      <div class="pagination">
+
+        <div id="credenciais-pagination" class="pagination">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

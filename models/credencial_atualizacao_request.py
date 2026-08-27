@@ -1,8 +1,7 @@
 from pydantic import BaseModel
 
-class Credencial(BaseModel):
 
-  id: int | None = None
+class CredencialAtualizacaoRequest(BaseModel):
+
   nome: str
   descricao: str | None = None
-  ativo: bool = True

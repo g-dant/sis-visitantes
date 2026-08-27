@@ -19,7 +19,8 @@
   <script src="/static/js/ferramentas-gerais/paginacao.js"></script>
 
   <script src="/static/js/telas-especificas/usuarios/usuarios.js" defer></script>
-
+  <script src="/static/js/telas-especificas/usuarios/credenciais/credenciais.js" defer></script>
+  
   <script src="/static/js/componentes-gerais/header/editar-usuario.js" defer></script> 
   <script src="/static/js/componentes-gerais/header/header.js" defer></script>
   <script src="/static/js/componentes-gerais/header/logout.js" defer></script>
@@ -43,9 +44,12 @@
     {% include "usuarios/barra_usuarios.html" %}
     {% include "usuarios/tabela_usuarios.html" %}
     {% include "usuarios/paginacao_usuarios.html" %}
-    {% include "usuarios/modal_usuario.html" %}
-
+    
     {% include "components/header_editar_usuario_logado/modal_editar_usuario_logado.html" %}
+    
+    {% include "usuarios/modal_usuario.html" %}
+    {% include "usuarios/modal_credenciais.html" %}
+    {% include "usuarios/modal_nova_credencial.html" %}
 
   </div>
 

@@ -12,16 +12,24 @@ class CredencialRepository:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           SELECT
-            id,
-            nome,
-            ativo
-          FROM credencial
-          ORDER BY nome
-          """
-        )
+            c.id,
+            c.nome,
+            c.descricao,
+            c.ativo,
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM usuario u
+                WHERE u.id_credencial = c.id
+              )
+              THEN false
+              ELSE true
+            END AS pode_excluir
+          FROM credencial c
+          ORDER BY c.nome
+          """)
 
         return cursor.fetchall()
 
@@ -38,17 +46,24 @@ class CredencialRepository:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           SELECT
-            id,
-            nome,
-            ativo
-          FROM credencial
-          WHERE id = %s
-          """,
-          (id_credencial,)
-        )
+            c.id,
+            c.nome,
+            c.descricao,
+            c.ativo,
+            CASE
+              WHEN EXISTS (
+                SELECT 1
+                FROM usuario u
+                WHERE u.id_credencial = c.id
+              )
+              THEN false
+              ELSE true
+            END AS pode_excluir
+          FROM credencial c
+          WHERE c.id = %s
+        """, (id_credencial,))
 
         return cursor.fetchone()
 
@@ -59,10 +74,14 @@ class CredencialRepository:
   @staticmethod
   def inserir(
     nome: str,
-    ativo: bool
-  ):
+    descricao: str | None,
+    ativo: bool,
+    conn=None):
 
-    conn = get_connection()
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
 
     try:
 
@@ -72,36 +91,36 @@ class CredencialRepository:
           """
           INSERT INTO credencial (
             nome,
-            ativo
-          )
+            descricao,
+            ativo)
           VALUES (
             %s,
-            %s
-          )
+            %s,
+            %s)
           RETURNING id
           """,
-          (
-            nome,
-            ativo
-          )
-        )
+          (nome,
+           descricao,
+           ativo
+          ))
 
         id_credencial = cursor.fetchone()["id"]
 
+      if not conn_externa:
         conn.commit()
 
-        return id_credencial
+      return id_credencial
 
     finally:
-      conn.close()
-
+      if not conn_externa:
+        conn.close()
 
   @staticmethod
   def atualizar_tudo(
-    id_credencial: int,
-    nome: str,
-    ativo: bool
-  ):
+    id_credencial: int, 
+    nome: str, 
+    descricao: str | None, 
+    ativo: bool):
 
     conn = get_connection()
 
@@ -109,47 +128,45 @@ class CredencialRepository:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           UPDATE credencial
           SET
             nome = %s,
+            descricao = %s,
             ativo = %s
           WHERE id = %s
-          """,
-          (
+          """, (
             nome,
+            descricao,
             ativo,
-            id_credencial
-          )
-        )
+            id_credencial))
 
         conn.commit()
 
     finally:
       conn.close()
 
-
   @staticmethod
-  def excluir(
-    id_credencial: int
-  ):
+  def excluir(id_credencial: int, conn=None):
 
-    conn = get_connection()
+    conn_externa = (conn is not None)
+
+    if not conn_externa:
+      conn = get_connection()
 
     try:
 
       with conn.cursor() as cursor:
 
-        cursor.execute(
-          """
+        cursor.execute("""
           DELETE FROM credencial
           WHERE id = %s
-          """,
-          (id_credencial,)
-        )
+          """, (id_credencial,))
 
+      if not conn_externa:
         conn.commit()
 
     finally:
-      conn.close()
+
+      if not conn_externa:
+        conn.close()

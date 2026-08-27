@@ -180,6 +180,11 @@ input:disabled:-webkit-autofill:focus {
   color: white;
 }
 
+.btn-danger {
+  background: #c2082a;
+  color: white;
+}
+
 .table-wrap {
   overflow: auto;
 }
@@ -1146,4 +1151,21 @@ tbody td:last-child {
   align-items: center;
   gap: 8px;
   white-space: nowrap;
+}
+
+.modal-credencial {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.modal-credencial-cabecalho {
+  flex-shrink: 0;
+}
+
+.modal-credencial-permissoes {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin-top: 20px;
 }

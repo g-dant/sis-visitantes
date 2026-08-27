@@ -13,6 +13,12 @@
   
     </div>
   
+    <button id="btn-credenciais" class="btn btn-primary"
+      onclick="abrirModalCadastroCredenciais()">
+        <i class="fa-solid fa-key"></i>
+        Credenciais
+    </button>
+  
     {% if possui_permissao(usuario, "USUARIO_CRIAR") %}
     <button
       id="btn-novo-usuario"

@@ -31,8 +31,7 @@ class EmpresaRepository:
               ELSE true
             END AS pode_excluir
           FROM empresa e
-          ORDER BY e.nome
-          """)
+          ORDER BY e.nome""")
   
         return cursor.fetchall()
   
@@ -73,8 +72,7 @@ class EmpresaRepository:
           FROM empresa e
   
           WHERE e.id = %s
-          """,
-          (id_empresa,))
+          """, (id_empresa,))
   
         return cursor.fetchone()
   

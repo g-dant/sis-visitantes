@@ -1,0 +1,100 @@
+<div id="modalNovaCredencial" class="modal-bg">
+
+  <div class="modal modal-credencial">
+
+    <button
+      type="button"
+      class="modal-fechar"
+      onclick="fecharModalNovaCredencial()"
+      aria-label="Fechar">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <!-- CABEÇALHO FIXO -->
+    <div class="modal-credencial-cabecalho">
+
+      <h2 id="titulo-modal-credencial">
+        Nova credencial
+      </h2>
+
+      <div class="campo-edicao">
+
+        <label for="nova-credencial-nome">
+          Nome
+        </label>
+
+        <input
+          type="text"
+          id="nova-credencial-nome"
+          autocomplete="off">
+
+        <span
+          id="erro-nova-credencial-nome"
+          class="erro-campo">
+        </span>
+
+      </div>
+
+      <div class="campo-edicao">
+
+        <label for="nova-credencial-descricao">
+          Descrição
+        </label>
+
+        <textarea style="text-transform: none !important"
+          id="nova-credencial-descricao"
+          rows="3">
+        </textarea>
+
+      </div>
+      
+      <br>
+
+      <div class="modal-acoes">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="fecharModalNovaCredencial()">
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="salvarNovaCredencial()">
+          Salvar
+        </button>
+
+      </div>
+
+    </div>
+    <hr>
+    <h4>Operações permitidas:</h4>
+    <hr>
+
+    <!-- ÁREA COM SCROLL -->
+    <div class="modal-credencial-permissoes">
+
+      <table class="data-table">
+
+        <thead>
+
+          <tr>
+            <th>Código</th>
+            <th>Descrição</th>
+            <th>Habilitado</th>
+            <th>Ações</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="nova-credencial-permissoes-tbody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
