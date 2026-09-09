@@ -1,3 +1,11 @@
+<div id="aguarde-importacao" class="overlay-aguarde" hidden>
+  <div class="caixa-aguarde" role="status" aria-live="polite">
+    <div class="spinner-grande"></div>
+    <strong>Importando arquivo</strong>
+    <span>Aguarde enquanto a planilha é processada...</span>
+  </div>
+</div>
+
 <div id="modalImportacao" class="modal-bg">
   <div class="modal modal-importacao">
 
@@ -5,7 +13,8 @@
     <div class="importacao-conteudo">
 
       <div class="importacao-conteudo">
-        <input type="file" id="arquivo-importacao" accept=".csv,.xlsx,.ods" style="display:none;">
+        <input type="file" id="arquivo-importacao" 
+	  accept=".csv,.xlsx,.ods" style="display:none;">
 
         <div class="importacao-arquivo">
 

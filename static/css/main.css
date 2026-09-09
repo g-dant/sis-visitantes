@@ -1169,3 +1169,64 @@ tbody td:last-child {
   overflow-y: auto;
   margin-top: 20px;
 }
+
+.overlay-aguarde {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.overlay-aguarde[hidden] {
+  display: none;
+}
+
+.caixa-aguarde {
+  width: min(90vw, 380px);
+  min-height: 180px;
+  padding: 32px 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  text-align: center;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.caixa-aguarde strong {
+  font-size: 20px;
+  color: #1f2937;
+}
+
+.caixa-aguarde span {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+.spinner-grande {
+  width: 48px;
+  height: 48px;
+
+  border: 5px solid #dbe3ed;
+  border-top-color: #1976d2;
+  border-radius: 50%;
+
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

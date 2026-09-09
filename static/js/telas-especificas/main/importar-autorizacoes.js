@@ -19,6 +19,7 @@ function arquivoImportacaoSelecionado(event) {
 
 document.getElementById("arquivo-importacao").addEventListener("change", arquivoImportacaoSelecionado);
 document.getElementById("btn-confirmar-importacao").addEventListener("click", confirmarImportacao);
+document.getElementById("btn-relatorio-erros-importacao").addEventListener("click", baixarRelatorioErrosImportacao);
 
 function selecionarArquivoImportacao() {
   document.getElementById("arquivo-importacao").click();
@@ -32,8 +33,14 @@ async function importarArquivoAutorizacoes() {
     return;
   }
 
+  const indicadorAguarde = document.getElementById("aguarde-importacao");
+  const botaoImportar = document.getElementById("btn-importar-autorizacoes");
+
   const formData = new FormData();
   formData.append("arquivo", arquivo);
+
+  botaoImportar.disabled = true;
+  indicadorAguarde.hidden = false;
 
   try {
     const response = await fetch(
@@ -44,17 +51,15 @@ async function importarArquivoAutorizacoes() {
       }
     );
 
-    let resultado;
-
-    try {
-      resultado = await response.json();
-    } catch (erro) {
-      alert("O servidor retornou uma resposta inválida.");
+    if (!response.ok) {
+      alert("Erro de requisição.");
       return;
     }
 
-    if (!response.ok || !resultado.sucesso) {
-      alert(resultado.mensagem || "Erro ao importar o arquivo.");
+    const resultado = await response.json();
+
+    if (!resultado.sucesso) {
+      alert(resultado.mensagem);
       return;
     }
 
@@ -67,8 +72,12 @@ async function importarArquivoAutorizacoes() {
     abrirModalRevisaoImportacao();
 
   } catch (erro) {
-    console.error("Erro na requisição:", erro);
+    console.error("Erro na importação:", erro);
     alert("Não foi possível comunicar com o servidor.");
+
+  } finally {
+    botaoImportar.disabled = false;
+    indicadorAguarde.hidden = true;
   }
 }
 
@@ -303,4 +312,80 @@ function mostrarAvisoNomeBanco(numeroLinha) {
     + "\n\n"
 
     + "A importação utilizará o nome cadastrado.");
+}
+
+function filtrarLinhasRelatorio(linhas) {
+  return linhas.map((linha) => {
+    const autorizacao = linha.autorizacao || {};
+
+    const erros = (linha.erros || [])
+      .map((erro) => erro.mensagem)
+      .filter(Boolean)
+      .join("\n");
+
+    return {
+      CPF: autorizacao.cpf ?? autorizacao.CPF ?? "",
+      Nome: autorizacao.nome ?? autorizacao.NOME ?? "",
+      Empresa: autorizacao.empresa ?? autorizacao.EMPRESA ?? "",
+      Placa: autorizacao.placa ?? autorizacao.PLACA ?? "",
+      De: autorizacao.primeiro_dia ?? autorizacao.DE ?? "",
+      Até: autorizacao.ultimo_dia ?? autorizacao.ATÉ ?? "",
+      Resultado: erros
+    };
+  });
+}
+
+async function baixarRelatorioErrosImportacao() {
+  if (
+    !resultadoImportacao ||
+    !Array.isArray(resultadoImportacao.linhas)
+  ) {
+    alert("Nenhum resultado de importação disponível.");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "/autorizacoes/importacao/relatorio-erros",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          linhas: filtrarLinhasRelatorio(resultadoImportacao.linhas)
+        })
+      }
+    );
+
+    if (!response.ok) {
+      let mensagem = "Não foi possível gerar o relatório.";
+
+      try {
+        const erro = await response.json();
+        mensagem = erro.detail || erro.mensagem || mensagem;
+      } catch (erro) {
+        // A resposta de erro não era JSON.
+      }
+
+      alert(mensagem);
+      return;
+    }
+
+    const arquivo = await response.blob();
+    const url = URL.createObjectURL(arquivo);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "resultado_importacao.xlsx";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+  } catch (erro) {
+    console.error("Erro ao gerar relatório:", erro);
+    alert("Não foi possível comunicar com o servidor.");
+  }
 }

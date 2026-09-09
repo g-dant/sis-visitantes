@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 
 from security.auth_guard import usuario_logado
 from security.permissoes import exigir_permissao
@@ -7,10 +7,11 @@ from security.permissoes import exigir_permissao
 from models.alterar_status_request import AlterarStatusRequest
 from models.autorizacao_request import AutorizacaoRequest
 from models.linha_importacao import LinhaImportacao
+from models.relatorio_erros_request import RelatorioErrosRequest
 from models.resultado_importacao import ResultadoImportacao
 
 from services.autorizacao_service import AutorizacaoService
-
+from services.exportadores.resultado_importacao_xlsx_service import ResultadoImportacaoXlsxService
 
 router = APIRouter()
 
@@ -19,7 +20,6 @@ router = APIRouter()
 def listar_autorizacoes(sessao = Depends(exigir_permissao("AUTORIZACAO_VISUALIZAR"))):
   return AutorizacaoService.listar()
 
-
 @router.get("/autorizacoes/importacao/modelo")
 def baixar_modelo_importacao():
   return FileResponse(
@@ -27,11 +27,26 @@ def baixar_modelo_importacao():
     filename="modelo-importacao.ods",
     media_type="application/vnd.oasis.opendocument.spreadsheet")
 
+@router.post("/autorizacoes/importacao/relatorio-erros")
+def exportar_relatorio_erros(dados: RelatorioErrosRequest):
+    if not dados.linhas:
+        raise HTTPException(status_code=400,
+          detail="Nenhuma linha disponível para exportação.")
+
+    arquivo = ResultadoImportacaoXlsxService.gerar(dados.linhas)
+
+    return StreamingResponse(
+        arquivo,
+        media_type=(
+            "application/vnd.openxmlformats-officedocument"
+            ".spreadsheetml.sheet"),
+        headers={
+            "Content-Disposition": (
+            'attachment; filename="resultado_importacao.xlsx"') })
 
 @router.get("/autorizacoes/{id_autorizacao}")
 def buscar_autorizacao(id_autorizacao: int, sessao = Depends(exigir_permissao("AUTORIZACAO_VISUALIZAR"))):
   return AutorizacaoService.buscar_por_id(id_autorizacao)
-
 
 @router.post("/autorizacoes")
 def criar_autorizacao(request: AutorizacaoRequest, sessao = Depends(exigir_permissao("AUTORIZACAO_CRIAR"))):
@@ -68,7 +83,6 @@ def atualizar_autorizacao(
   except ValueError as e:
     raise HTTPException(status_code=400, detail=str(e))
   
-
 @router.patch("/autorizacoes/{id_autorizacao}/status")
 def alterar_status_autorizacao(
   id_autorizacao: int,
@@ -87,12 +101,10 @@ def alterar_status_autorizacao(
   except ValueError as e:
     raise HTTPException(status_code=400, detail=str(e))
 
-
 @router.delete("/autorizacoes/{id_autorizacao}")
 def excluir_autorizacao(id_autorizacao: int, sessao = Depends(exigir_permissao("AUTORIZACAO_EXCLUIR"))):
   AutorizacaoService.excluir(id_autorizacao=id_autorizacao, id_usuario_logado=sessao["id_usuario"])
   return { "mensagem": "Autorização excluída com sucesso" }
-
 
 @router.get("/autorizacoes-consulta/status-exibicao")
 def listar_status_exibicao(sessao=Depends(exigir_permissao("AUTORIZACAO_VISUALIZAR"))):
@@ -117,5 +129,3 @@ def revalidar_planilha(resultado: dict):
 @router.post("/importacao/confirmar")
 def confirmar_importacao(resultado: dict, sessao = Depends(exigir_permissao("AUTORIZACAO_IMPORTAR"))):
   return AutorizacaoService.confirmar_importacao(resultado, sessao)
-
-

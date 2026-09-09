@@ -35,6 +35,7 @@ class ImportacaoAutorizacoesService:
 
     try:
       autorizacoes = NormalizadorImportacaoService.normalizar(registros)
+
     except HeaderInvalidoError as erro:
       
       return ResultadoImportacao(
@@ -45,3 +46,4 @@ class ImportacaoAutorizacoesService:
     resultado.mensagem = "Arquivo processado com sucesso."
 
     return resultado
+
