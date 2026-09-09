@@ -5,7 +5,6 @@ class CpfUtils:
 
   @staticmethod
   def limpar(cpf: str | None):
-
     if cpf is None:
       return ""
 

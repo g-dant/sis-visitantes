@@ -19,8 +19,15 @@ class XlsxImportador:
       registro = {}
 
       for coluna, valor in zip(cabecalho,linha):
+
+        if (valor is None):
+          valor = ""
+        else:
+          valor = str(valor)
+
         registro[coluna] = valor
 
       registros.append(registro)
 
     return registros
+

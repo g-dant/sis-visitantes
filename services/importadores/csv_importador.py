@@ -9,5 +9,4 @@ class CsvImportador:
 
     texto = conteudo.decode("utf-8")
     leitor = csv.DictReader(io.StringIO(texto))
-
     return list(leitor)

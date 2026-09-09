@@ -31,11 +31,9 @@ class OdsImportador:
         paragrafos = celula.getElementsByType(P)
 
         if paragrafos:
-
           texto = "".join(
             p.firstChild.data if p.firstChild else ""
-            for p in paragrafos
-          )
+            for p in paragrafos)
 
         valores.append(texto)
 
@@ -52,6 +50,8 @@ class OdsImportador:
       registro = {}
 
       for coluna, valor in zip(cabecalho, linha):
+        if (valor is None):
+          valor = ""
         registro[coluna] = valor
 
       registros.append(registro)

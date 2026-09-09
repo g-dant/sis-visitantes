@@ -11,6 +11,10 @@ from utils.cpf_utils import CpfUtils
 
 class ValidacaoImportacaoService:
 
+  # Trata-se do processo que valida linha por linha as planilhas de autorização importadas
+  # Não inclui verificação de HEADERS da planilha importada
+  # Tal validação se encontra como método estático em NormalizadorImportacaoService
+
   @staticmethod
   def validar(autorizacoes: list[AutorizacaoImportacao]) -> ResultadoImportacao:
   
@@ -55,8 +59,16 @@ class ValidacaoImportacaoService:
   @staticmethod
   def __adicionar_erro(
     linha: LinhaImportacao, campo: str, mensagem: str) -> None:
+
+    # Validar se já existe erro com mesma descrição
+    erro_ja_existe = any(erro.mensagem == mensagem for erro in linha.erros)
+
+    if erro_ja_existe:
+      return
+
     linha.valida = False
-    linha.erros.append(ErroImportacao(campo=campo, mensagem=mensagem))
+    linha.erros.append(ErroImportacao(
+      campo=campo, mensagem=mensagem))
 
   @staticmethod
   def __validar_cpf(linha: LinhaImportacao) -> None:

@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from models.resultado_importacao import ResultadoImportacao
 
 from services.importadores.csv_importador import CsvImportador
@@ -6,7 +8,7 @@ from services.importadores.ods_importador import OdsImportador
 from services.normalizador_importacao_service import NormalizadorImportacaoService
 from services.validacao_importacao_service import ValidacaoImportacaoService
 
-from dataclasses import asdict
+from utils.exceptions import HeaderInvalidoError
 
 
 class ImportacaoAutorizacoesService:
@@ -29,12 +31,17 @@ class ImportacaoAutorizacoesService:
     else:
       return ResultadoImportacao(
         sucesso=False,
-        mensagem="Erro no processamento do arquivo.",
-        registros=resultados)
+        mensagem="Erro ao processar planilha.")
 
-    autorizacoes = NormalizadorImportacaoService.normalizar(registros)
+    try:
+      autorizacoes = NormalizadorImportacaoService.normalizar(registros)
+    except HeaderInvalidoError as erro:
+      
+      return ResultadoImportacao(
+        sucesso=False,
+        mensagem=str(erro))
+
     resultado = ValidacaoImportacaoService.validar(autorizacoes)
-
-    resultado.mensagem = ("Arquivo processado com sucesso.")
+    resultado.mensagem = "Arquivo processado com sucesso."
 
     return resultado

@@ -15,6 +15,7 @@ from services. validacao_importacao_service import ValidacaoImportacaoService
 
 class AutorizacaoService:
 
+
   @staticmethod
   def listar():
     return AutorizacaoRepository.listar()
@@ -191,15 +192,18 @@ class AutorizacaoService:
       status_anterior=autorizacao_atual["status_nome"],
       status_novo=status_novo["nome"])
 
+
   @staticmethod
   def listar_status_exibicao():
     return AutorizacaoRepository.listar_status_exibicao()
+
 
   @staticmethod
   def importar(arquivo):
   
       resultado = ImportacaoAutorizacoesService.importar(arquivo)
       return asdict(resultado)
+
 
   @staticmethod
   def revalidar_linha(dados: dict):
@@ -222,6 +226,7 @@ class AutorizacaoService:
   
     return asdict(linha)
 
+
   @staticmethod
   def revalidar_planilha(dados: dict):
   
@@ -230,6 +235,7 @@ class AutorizacaoService:
     resultado = ValidacaoImportacaoService.validar(autorizacoes)
   
     return asdict(resultado)
+
 
   @staticmethod
   def confirmar_importacao(resultado: dict, sessao):
@@ -247,6 +253,7 @@ class AutorizacaoService:
     return {
       "sucesso": True,
       "mensagem": "Importação realizada com sucesso." }
+
 
   @staticmethod
   def atualizar_periodo(

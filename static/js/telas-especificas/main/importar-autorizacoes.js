@@ -25,7 +25,6 @@ function selecionarArquivoImportacao() {
 }
 
 async function importarArquivoAutorizacoes() {
-
   const input = document.getElementById("arquivo-importacao");
   const arquivo = input.files[0];
 
@@ -36,25 +35,41 @@ async function importarArquivoAutorizacoes() {
   const formData = new FormData();
   formData.append("arquivo", arquivo);
 
-  const response =
-    await fetch(
+  try {
+    const response = await fetch(
       "/autorizacoes/importar",
-      { method: "POST",
-        body: formData }
+      {
+        method: "POST",
+        body: formData
+      }
     );
 
-  if (!response.ok) {
-    alert("Erro ao importar.");
-    return;
+    let resultado;
+
+    try {
+      resultado = await response.json();
+    } catch (erro) {
+      alert("O servidor retornou uma resposta inválida.");
+      return;
+    }
+
+    if (!response.ok || !resultado.sucesso) {
+      alert(resultado.mensagem || "Erro ao importar o arquivo.");
+      return;
+    }
+
+    resultadoImportacao = resultado;
+
+    preencherResumoImportacao(resultado);
+    renderizarTabelaImportacao(resultado);
+
+    fecharModalImportacao();
+    abrirModalRevisaoImportacao();
+
+  } catch (erro) {
+    console.error("Erro na requisição:", erro);
+    alert("Não foi possível comunicar com o servidor.");
   }
-
-  const resultado = await response.json();
-  resultadoImportacao = resultado;
-  preencherResumoImportacao(resultado);
-  renderizarTabelaImportacao(resultado);
-
-  fecharModalImportacao();
-  abrirModalRevisaoImportacao();
 }
 
 function baixarModeloImportacao() {
@@ -117,12 +132,12 @@ function renderizarLinhaImportacao(linha) {
 
 function renderizarTabelaImportacao(resultado) {
 
-    const tbody = document.getElementById("tbody-importacao");
+  const tbody = document.getElementById("tbody-importacao");
 
-    tbody.innerHTML = "";
-    for (const linha of resultado.linhas) {
-        tbody.innerHTML += renderizarLinhaImportacao(linha);
-    }
+  tbody.innerHTML = resultado.linhas.sort(
+    (a, b) => (a.autorizacao.cpf || "")
+      .localeCompare(b.autorizacao.cpf || ""))
+      .map(linha => renderizarLinhaImportacao(linha)).join("");
 }
 
 function possuiErroCampo(linha, campo,) {

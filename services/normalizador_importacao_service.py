@@ -1,15 +1,29 @@
 from models.autorizacao_importacao import AutorizacaoImportacao
+
 from utils.data_utils import DataUtils
+from utils.exceptions import HeaderInvalidoError
 from utils.importacao_utils import ImportacaoUtils
 
 
 class NormalizadorImportacaoService:
 
   @staticmethod
+  def headerValido(registros):
+    chaves_esperadas = {"CPF", "NOME", "EMPRESA", "PLACA", "DE", "ATÉ"}
+    return all({chave.strip().upper() for chave in item} == chaves_esperadas 
+      for item in registros)
+
+  @staticmethod
   def normalizar(registros):
 
     resultado = []
 
+    # Antes de chamar as colunas, verificar se header é válido
+    if not NormalizadorImportacaoService.headerValido(registros):
+      raise HeaderInvalidoError("A planilha deve possuir exatamente as colunas: "
+        "CPF, NOME, EMPRESA, PLACA, DE e ATÉ")
+
+    # Aqui se iniciam as referências às colunas já validadas
     for registro in registros:
 
       autorizacao = AutorizacaoImportacao(
@@ -18,13 +32,13 @@ class NormalizadorImportacaoService:
             registro, "CPF"),
       
           nome=NormalizadorImportacaoService.obter_valor(
-            registro, "Nome"),
+            registro, "Nome").upper(),
       
           empresa=NormalizadorImportacaoService.obter_valor(
-            registro, "Empresa"),
+            registro, "Empresa").upper(),
       
           placa=NormalizadorImportacaoService.obter_valor(
-            registro, "Placa"),
+            registro, "Placa").upper(),
       
           primeiro_dia=DataUtils.parse(
             NormalizadorImportacaoService.obter_valor(
@@ -32,8 +46,7 @@ class NormalizadorImportacaoService:
       
           ultimo_dia=DataUtils.parse(
             NormalizadorImportacaoService.obter_valor(
-              registro, "Último Dia", "Até"))
-      )
+              registro, "Último Dia", "Até")))
 
       if ImportacaoUtils.linha_vazia(autorizacao):
         continue
@@ -50,5 +63,5 @@ class NormalizadorImportacaoService:
       if valor not in (None, ""):
         return valor
 
-    return None
+    return ""
 
