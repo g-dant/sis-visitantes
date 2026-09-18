@@ -8,7 +8,7 @@ Também possui um mecanismo de importação em lote de autorizações por planil
 
 ## OBSERVAÇÃO
 
-Este documento possui natureza técnica. Para consultar o manual de utilização do usuário, acesse [[sis-visitantes/src/branch/main/manual-usuario.md]]
+Este documento possui natureza técnica. Para consultar o manual de utilização do usuário, acesse [[https://github.com/g-dant/sis-visitantes/src/branch/main/manual-usuario.md]]
 
 ---
 
